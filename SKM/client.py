@@ -8,7 +8,7 @@ PORT = 5052
 FORMAT = 'utf-8'
 server_sni_hostname = 'example.com'
 DISCONNECT_MESSAGE = "!DISCONNECT"
-SERVER = "172.17.0.2"
+SERVER = "172.17.0.3"
 ADDR = (SERVER, PORT)
 server_cert = 'Keys/server.crt'
 client_cert = 'Keys/client.crt'
@@ -33,9 +33,9 @@ def send(msg):
     print(receive)
 
 
-case_id = '17306646911331411784'
-message_id = '18270556775045614554'
-sender = '0x22'
+case_id = '17552612971835690720'
+message_id = '1427939399660730494'
+sender = '0x11'
 # send("Please generate my key//" + case_id + '//' + sender)
 send("Please read my data//" + sender + '//' + case_id + '//' + message_id)
 # poi voglio più message_id non solo uno

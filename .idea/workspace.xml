@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="71435498-4d7d-41b0-a738-96bd1b808b72" name="Changes" comment="" />
+    <list default="true" id="71435498-4d7d-41b0-a738-96bd1b808b72" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/SKM/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/SKM/client.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -54,6 +56,7 @@
       <option name="presentableId" value="Default" />
       <updated>1652346774478</updated>
       <workItem from="1652346776171" duration="683000" />
+      <workItem from="1652347482143" duration="819000" />
     </task>
     <servers />
   </component>
