@@ -53,5 +53,5 @@ def main(test_list, case_id):
 
     x.execute(
         "UPDATE ciphertext SET ipfs_hash=? WHERE sender_address=? AND recipient_address=? AND case_id=?",
-        (hash_file, sender_address, str(recipient), str(case_id)))
+        (hash_file, sender_address, recipient[0], str(case_id)))
     conn.commit()

@@ -39,7 +39,7 @@ class HybridABEnc(ABEnc):
 
 """
 - creation of the "shared secret" between SDM and SKM, namely (pk,mk) keys
-- cyphering of the message with the policy
+- ciphering of the message with the policy
 - call to the "write" module to write the IPFS file with all necessary data of the message
 """
 
@@ -65,7 +65,9 @@ def main(message, access_policy, message_id):
         connection = sqlite3.connect('../Pk_Mk/keys.db')
         y = connection.cursor()
 
-        y.execute("INSERT OR IGNORE INTO pkmk_keys VALUES (?,?,?)", (recipient, pk_dumped, mk_dumped))
+        case_id = random.randint(1, 2 ** 64)
+
+        y.execute("INSERT OR IGNORE INTO pkmk_keys VALUES (?,?,?)", (str(case_id), pk_dumped, mk_dumped))
         connection.commit()
 
         ct = hyb_abe.encrypt(pk, message, access_policy)
@@ -77,10 +79,30 @@ def main(message, access_policy, message_id):
         conn = sqlite3.connect('Database_SDM/database.db')
         x = conn.cursor()
 
-        x.execute("INSERT OR IGNORE INTO ciphertext VALUES (?,?,?,?)", (sender_address, recipient, ct_dumped, 'null'))
+        x.execute("INSERT OR IGNORE INTO ciphertext VALUES (?,?,?,?)", (sender_address, message_id, '', str(case_id)))
         conn.commit()
 
-        write.main(sender_address, message_id, ct_dumped)
+        # Connection to SQLite3 database
+        connection1 = sqlite3.connect('../Pk_Mk/public_keys.db')
+        k = connection1.cursor()
+
+        k.execute("SELECT * FROM publicKeys WHERE server = ?", ('SKM',))
+        user_publicKey = k.fetchall()
+        publicKey_usable = rsa.PublicKey.load_pkcs1(user_publicKey[0][1])
+
+        salt = random.randint(1, 2 ** 64)
+        salt1 = str(salt).encode()
+        salt_encrypted = rsa.encrypt(salt1, publicKey_usable)
+        salt_encrypted_dumped = "".join(chr(i) for i in salt_encrypted)
+        s_1 = message.decode('utf-8') + str(salt)
+        s_1 = s_1.encode()
+        s_1_hashed = hashlib.sha256(s_1)
+        hex_dig = s_1_hashed.hexdigest()
+
+        test_list = []
+        test_list.append((message_id, ct_dumped, hex_dig, salt_encrypted_dumped))
+
+        write.main(test_list, case_id)
     else:
         print('I am trying this one')
 

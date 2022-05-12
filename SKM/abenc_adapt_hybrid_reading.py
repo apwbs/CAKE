@@ -85,14 +85,9 @@ def main(message):
         api = ipfshttpclient.connect('/ip4/127.0.0.1/tcp/5001')
         getfile = api.cat(ct_data[0][2])
         find_separator = [m.start() for m in re.finditer(b'--->', getfile)]
-        for i in range(len(find_separator)+1):
-            if i == 0:
-                check = getfile[:find_separator[i]]
-            elif i < len(find_separator):
-                check = getfile[find_separator[i - 1] + 4:find_separator[i]]
-            else:
-                check = getfile[find_separator[i - 1] + 4:]
-            test = json.loads(check)
+        if len(find_separator) == 0:
+            print('un solo messaggio')
+            test = json.loads(getfile)
             check_requester = test['message_id']
             if check_requester == message[3]:
                 test1 = test['content']
@@ -103,6 +98,25 @@ def main(message):
                 salt = salt.decode('unicode_escape').encode("raw_unicode_escape")
                 salt = rsa.decrypt(salt, privateKey_usable)
                 return mdec, salt
+        else:
+            for i in range(len(find_separator)+1):
+                if i == 0:
+                    check = getfile[:find_separator[i]]
+                elif i < len(find_separator):
+                    check = getfile[find_separator[i - 1] + 4:find_separator[i]]
+                else:
+                    check = getfile[find_separator[i - 1] + 4:]
+                test = json.loads(check)
+                check_requester = test['message_id']
+                if check_requester == message[3]:
+                    test1 = test['content']
+                    test1 = decoders_encoders.ciphertext_decoder(test1)
+                    mdec = hyb_abe.decrypt(pk, sk, test1)
+                    salt = test['salt']
+                    salt = bytes(salt, 'unicode_escape')
+                    salt = salt.decode('unicode_escape').encode("raw_unicode_escape")
+                    salt = rsa.decrypt(salt, privateKey_usable)
+                    return mdec, salt
 
 
 if __name__ == "__main__":

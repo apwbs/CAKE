@@ -25,7 +25,7 @@ bindsocket.bind(ADDR)
 bindsocket.listen(5)
 
 """
-function triggered by the client handler. Here starts the cyphering of the message with the policy.
+function triggered by the client handler. Here starts the ciphering of the message with the policy.
 """
 
 
@@ -35,7 +35,7 @@ def create(message):
 
 """
 function that handles the requests from the clients. There is only one request possible, namely the 
-cyphering of a message with a policy.
+ciphering of a message with a policy.
 """
 
 
@@ -54,7 +54,7 @@ def handle_client(conn, addr):
             print(f"[{addr}] {msg}")
             conn.send("Msg received!".encode(FORMAT))
             message = msg.split('||')
-            if message[0] == "Please cypher this message":
+            if message[0] == "Please cipher this message":
                 create(message)
 
     conn.close()
