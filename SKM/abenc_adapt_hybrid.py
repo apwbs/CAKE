@@ -10,8 +10,12 @@ import decoders_encoders
 attributes_0x11 = ['10']
 attributes_0x22 = ['4904']
 attributes_0x33 = ['52']
-
 # attributes = ['FOUR', 'TWO']
+
+"""
+Necessary ABE connections
+"""
+
 
 class HybridABEnc(ABEnc):
 
@@ -26,6 +30,12 @@ class HybridABEnc(ABEnc):
 
     def keygen(self, pk, mk, object):
         return self.abenc.keygen(pk, mk, object)
+
+
+"""
+function that creates a key for the demanding client. The key is generated using the 
+"shared secret" between the SDM and SKM, and the attributes of that particular client 
+"""
 
 
 def main(message):

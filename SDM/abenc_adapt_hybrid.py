@@ -7,13 +7,15 @@ import json
 import write
 import sqlite3
 import econders_decoders
-import rsa_sdm
 import random
 import rsa
-from pprint import pprint
 import hashlib
 
 sender_address = 'aiufhaisufhgasdoif'
+
+"""
+Necessary ABE connections
+"""
 
 
 class HybridABEnc(ABEnc):
@@ -33,6 +35,13 @@ class HybridABEnc(ABEnc):
         cipher = AuthenticatedCryptoAbstraction(sha2(key))
         c2 = cipher.encrypt(M)
         return {'c1': c1, 'c2': c2}
+
+
+"""
+- creation of the "shared secret" between SDM and SKM, namely (pk,mk) keys
+- cyphering of the message with the policy
+- call to the "write" module to write the IPFS file with all necessary data of the message
+"""
 
 
 def main(message, access_policy, message_id):

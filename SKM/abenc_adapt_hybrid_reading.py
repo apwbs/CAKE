@@ -3,7 +3,6 @@ from charm.schemes.abenc.abenc_bsw07 import CPabe_BSW07
 from charm.toolbox.pairinggroup import PairingGroup, GT
 from charm.toolbox.symcrypto import AuthenticatedCryptoAbstraction
 from charm.core.math.pairing import hashPair as sha2
-from math import ceil
 import json
 import sqlite3
 import ipfshttpclient
@@ -12,6 +11,10 @@ import re
 import rsa
 
 sender_address = 'aiufhaisufhgasdoif'
+
+"""
+Necessary ABE connections
+"""
 
 
 class HybridABEnc(ABEnc):

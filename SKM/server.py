@@ -14,11 +14,14 @@ ADDR = (SERVER, PORT)
 FORMAT = 'utf-8'
 DISCONNECT_MESSAGE = "!DISCONNECT"
 
+"""
+creation and connection of the secure channel using SSL protocol
+"""
+
 context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
 context.verify_mode = ssl.CERT_REQUIRED
 context.load_cert_chain(certfile=server_cert, keyfile=server_key)
 context.load_verify_locations(cafile=client_certs)
-
 bindsocket = socket.socket()
 bindsocket.bind(ADDR)
 bindsocket.listen(5)
@@ -30,6 +33,12 @@ def generate(message):
 
 def read(message):
     return abenc_adapt_hybrid_reading.main(message)
+
+
+"""
+function that handles the requests from the clients. There are two possible requests, namely the 
+creation of a key and the deciphering of a ciphertext.
+"""
 
 
 def handle_client(conn, addr):
@@ -57,6 +66,11 @@ def handle_client(conn, addr):
                 conn.send(b'Ecco qui il testo e il salt caro client:\n\n' + response[0] + b'\n\n' + response[1])
 
     conn.close()
+
+
+"""
+main function starting the server. It listens on a port and waits for a request from a client
+"""
 
 
 def start():

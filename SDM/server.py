@@ -13,18 +13,30 @@ ADDR = (SERVER, PORT)
 FORMAT = 'utf-8'
 DISCONNECT_MESSAGE = "!DISCONNECT"
 
+"""
+creation and connection of the secure channel using SSL protocol
+"""
 context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
 context.verify_mode = ssl.CERT_REQUIRED
 context.load_cert_chain(certfile=server_cert, keyfile=server_key)
 context.load_verify_locations(cafile=client_certs)
-
 bindsocket = socket.socket()
 bindsocket.bind(ADDR)
 bindsocket.listen(5)
 
+"""
+function triggered by the client handler. Here starts the cyphering of the message with the policy.
+"""
+
 
 def create(message):
     abenc_adapt_hybrid.main(message[1], message[2], message[3])
+
+
+"""
+function that handles the requests from the clients. There is only one request possible, namely the 
+cyphering of a message with a policy.
+"""
 
 
 def handle_client(conn, addr):
@@ -46,6 +58,11 @@ def handle_client(conn, addr):
                 create(message)
 
     conn.close()
+
+
+"""
+main function starting the server. It listens on a port and waits for a request from a client
+"""
 
 
 def start():
