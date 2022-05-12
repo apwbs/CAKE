@@ -36,6 +36,10 @@ class HybridABEnc(ABEnc):
         return cipher.decrypt(c2)
 
 
+"""
+"""
+
+
 def main(message):
     global groupObj
     groupObj = PairingGroup('SS512')
