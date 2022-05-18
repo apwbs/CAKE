@@ -3,6 +3,11 @@ pragma solidity >= 0.5.0 < 0.9.0;
 
 contract Plus {
 
+  struct IPFSInfo {
+    string link;
+  }
+  mapping (uint => IPFSInfo) AllLinks;
+
   struct UserInfo {
     uint[] attributes;
   }
@@ -14,6 +19,14 @@ contract Plus {
 
   function getUserInfo(address Address) public view returns (uint[] memory) {
     return AllUsers[Address].attributes;
+  }
+
+  function setIPFSInfo(uint256 CaseID, string memory _link) public {
+    AllLinks[CaseID].link= _link;
+  }
+
+  function getIPFSInfo(uint256 CaseID) public view returns (string memory) {
+    return AllLinks[CaseID].link;
   }
 
 }

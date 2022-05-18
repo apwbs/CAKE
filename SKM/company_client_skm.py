@@ -40,8 +40,7 @@ def retrieve_attributes(param):
 ##################################################################
 ##################################################################
 
-blockchain_address = 'http://127.0.0.1:9545'
-web3 = Web3(HTTPProvider(blockchain_address))
+web3 = Web3(Web3.HTTPProvider("https://ropsten.infura.io/v3/e3f35259b98f4b33898ecc8255789dba"))
 
 
 def get_nonce(ETH_address):
@@ -49,12 +48,11 @@ def get_nonce(ETH_address):
 
 
 def blockchain_interaction():
-    web3.eth.defaultAccount = web3.eth.accounts[4]
-    # web3.eth.accounts
-    private_key = 'c65c69b7fd8aa3d75dcb510bf48643d83adf4a07fd209ab3e8d03aa05b2fc9ad'
+    web3.eth.defaultAccount = '0xB91c337448f841aEA90dAc0Ee5eb2B62d0435ddC'
+    private_key = '74eeff4de3e90bfd7add0b30754947364d0ce43ad1c911553751b1e21ff3c39a'
 
     compiled_contract_path = '../Blockchain/build/contracts/Plus.json'
-    deployed_contract_address = '0x009091B5b6B5b285688A7f2eE00a8fF290e9Db48'
+    deployed_contract_address = '0x4d044120a55Ee693d7cf24f3253A36AF3ca23FcA'
 
     with open(compiled_contract_path) as file:
         contract_json = json.load(file)
@@ -81,10 +79,8 @@ def blockchain_interaction():
 
 
 def get_blockchain_data(param):
-    #web3.eth.defaultAccount = web3.eth.accounts[2]
-
     compiled_contract_path = '../Blockchain/build/contracts/Plus.json'
-    deployed_contract_address = '0x009091B5b6B5b285688A7f2eE00a8fF290e9Db48'
+    deployed_contract_address = '0x4d044120a55Ee693d7cf24f3253A36AF3ca23FcA'
 
     with open(compiled_contract_path) as file:
         contract_json = json.load(file)
@@ -106,11 +102,11 @@ def give_attributes(param):
 
 
 dict_users = {
-    web3.eth.accounts[8]: [36, 86, 16],
-    web3.eth.accounts[9]: [4, 77]
+    '0x9fA4e6293e9De4c9A7Cd6159cc60b4729970935a': [36, 86, 16],
+    '0xA571Dc71fCd60063DC9c27891AB3EB0db10631F1': [4, 77]
 }
 
-address = web3.eth.accounts[8]
+address = '0x9fA4e6293e9De4c9A7Cd6159cc60b4729970935a'
 if __name__ == "__main__":
     # store_default_attributes()
     # give_attributes(dict_users)

@@ -2,7 +2,7 @@ import socket
 import ssl
 
 HEADER = 64
-PORT = 5052
+PORT = 5053
 FORMAT = 'utf-8'
 server_sni_hostname = 'example.com'
 DISCONNECT_MESSAGE = "!DISCONNECT"
@@ -39,11 +39,12 @@ def send(msg):
     print(receive)
 
 
-case_id = '4325525822372369570'
-message_id = '5264829024051056676'
+case_id = '17382452396967629284'
+message_id = '14898316851509197010'
 sender = '0x11'
 # send("Please generate my key//" + case_id + '//' + sender)
 send("Please read my data//" + sender + '//' + case_id + '//' + message_id)
+# exit()
 # poi voglio più message_id non solo uno
 
 send(DISCONNECT_MESSAGE)
