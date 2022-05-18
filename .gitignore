@@ -1,2 +1,5 @@
 .idea/*
 /Blockchain/node_modules/
+/Blockchain/.secret
+/SDM/.env
+secret_mnemonic
