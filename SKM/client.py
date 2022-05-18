@@ -40,7 +40,7 @@ def send(msg):
 
 
 case_id = '7713620767953442560'
-message_id = '10308243347833419802'
+message_id = '3572543105123232838'
 sender = '0x11'
 # send("Please generate my key//" + case_id + '//' + sender)
 send("Please read my data//" + sender + '//' + case_id + '//' + message_id)
