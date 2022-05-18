@@ -83,7 +83,6 @@ def main(message):
     # ct_data_check = ct_data[0][1]
 
     ct_data_check = SC_retrieve_link.retrieve_link(message[2])
-    print(ct_data_check)
     api = ipfshttpclient.connect('/ip4/127.0.0.1/tcp/5001')
     getfile = api.cat(ct_data_check)
     find_separator = [m.start() for m in re.finditer(b'--->', getfile)]

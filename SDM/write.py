@@ -62,5 +62,6 @@ def main(test_list, case_id):
         "UPDATE ciphertext SET ipfs_hash=? WHERE sender_address=? AND recipient_address=? AND case_id=?",
         (hash_file, sender_address, str(recipient), str(case_id)))
     conn.commit()
-
+    print(type(case_id))
+    print(type(hash_file))
     SC_send_link.send_link(case_id, hash_file)

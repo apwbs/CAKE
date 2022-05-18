@@ -2,12 +2,12 @@ import json
 from web3 import Web3
 from decouple import config
 
-web3 = Web3(Web3.HTTPProvider("https://ropsten.infura.io/v3/e3f35259b98f4b33898ecc8255789dba"))
-sdm_ethereum_address = '0x5AD7D38Fee8F91c1E0E70e1d0da6C44af376ae16'
-# private_key = '73c720dbc3488d4afc5912cf9d9ed90de14cce58e863abd6cce3ff9bb4b022a8'
+web3 = Web3(Web3.HTTPProvider("https://ropsten.infura.io/v3/4a2091f61d304fd5b55251050b1fbe61"))
+sdm_ethereum_address = '0xD81Cbe02b50C19e01bC0931e3871963db8526B0E'
+
 private_key = config('private_key')
 compiled_contract_path = '../Blockchain/build/contracts/Plus.json'
-deployed_contract_address = '0x4d044120a55Ee693d7cf24f3253A36AF3ca23FcA'
+deployed_contract_address = '0x491AC91F473E5B78A0476179Ad4072926d7DD4AD'
 
 
 def get_nonce(ETH_address):

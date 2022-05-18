@@ -39,8 +39,8 @@ def send(msg):
     print(receive)
 
 
-case_id = '11888424576750589056'
-message_id = '205177214646663655'
+case_id = '7713620767953442560'
+message_id = '3572543105123232838'
 sender = '0x11'
 # send("Please generate my key//" + case_id + '//' + sender)
 send("Please read my data//" + sender + '//' + case_id + '//' + message_id)
