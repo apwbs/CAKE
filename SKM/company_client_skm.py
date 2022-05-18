@@ -40,7 +40,7 @@ def retrieve_attributes(param):
 ##################################################################
 ##################################################################
 
-web3 = Web3(Web3.HTTPProvider("https://ropsten.infura.io/v3/e3f35259b98f4b33898ecc8255789dba"))
+web3 = Web3(Web3.HTTPProvider("https://ropsten.infura.io/v3/4a2091f61d304fd5b55251050b1fbe61"))
 
 
 def get_nonce(ETH_address):
@@ -52,7 +52,7 @@ def blockchain_interaction():
     private_key = '74eeff4de3e90bfd7add0b30754947364d0ce43ad1c911553751b1e21ff3c39a'
 
     compiled_contract_path = '../Blockchain/build/contracts/Plus.json'
-    deployed_contract_address = '0x4d044120a55Ee693d7cf24f3253A36AF3ca23FcA'
+    deployed_contract_address = '0x491AC91F473E5B78A0476179Ad4072926d7DD4AD'
 
     with open(compiled_contract_path) as file:
         contract_json = json.load(file)
@@ -80,7 +80,7 @@ def blockchain_interaction():
 
 def get_blockchain_data(param):
     compiled_contract_path = '../Blockchain/build/contracts/Plus.json'
-    deployed_contract_address = '0x4d044120a55Ee693d7cf24f3253A36AF3ca23FcA'
+    deployed_contract_address = '0x491AC91F473E5B78A0476179Ad4072926d7DD4AD'
 
     with open(compiled_contract_path) as file:
         contract_json = json.load(file)
@@ -102,11 +102,11 @@ def give_attributes(param):
 
 
 dict_users = {
-    '0x9fA4e6293e9De4c9A7Cd6159cc60b4729970935a': [36, 86, 16],
-    '0xA571Dc71fCd60063DC9c27891AB3EB0db10631F1': [4, 77]
+    '0xB8597f6b522FbF72F4E573a3b854Fb9220a266f4': [36, 86, 16],
+    '0x1604BFF8F2378E59071f1D1E469577EEA58E93Ba': [4, 77]
 }
 
-address = '0x9fA4e6293e9De4c9A7Cd6159cc60b4729970935a'
+address = '0xB8597f6b522FbF72F4E573a3b854Fb9220a266f4'
 if __name__ == "__main__":
     # store_default_attributes()
     # give_attributes(dict_users)
