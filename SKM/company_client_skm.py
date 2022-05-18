@@ -106,7 +106,7 @@ dict_users = {
     '0x1604BFF8F2378E59071f1D1E469577EEA58E93Ba': [4, 77]
 }
 
-address = '0xB8597f6b522FbF72F4E573a3b854Fb9220a266f4'
+address = '0x1604BFF8F2378E59071f1D1E469577EEA58E93Ba'
 if __name__ == "__main__":
     # store_default_attributes()
     # give_attributes(dict_users)
