@@ -2,6 +2,7 @@ import ipfshttpclient
 import sqlite3
 import json
 import os
+import SC_send_link
 
 sender_address = 'aiufhaisufhgasdoif'
 
@@ -42,6 +43,7 @@ def main(test_list, case_id):
 
     new_file = api.add(name_file + 'test')
     hash_file = new_file['Hash']
+    print('ipfs hash')
     print(hash_file)
 
     # with open(name_file, "a") as text_file:
@@ -51,7 +53,14 @@ def main(test_list, case_id):
     conn = sqlite3.connect('Database_SDM/database.db')
     x = conn.cursor()
 
+    # x.execute(
+    #     "UPDATE ciphertext SET ipfs_hash=? WHERE sender_address=? AND recipient_address=? AND case_id=?",
+    #     (hash_file, sender_address, recipient[0], str(case_id)))
+    # conn.commit()
+
     x.execute(
         "UPDATE ciphertext SET ipfs_hash=? WHERE sender_address=? AND recipient_address=? AND case_id=?",
-        (hash_file, sender_address, recipient[0], str(case_id)))
+        (hash_file, sender_address, str(recipient), str(case_id)))
     conn.commit()
+
+    SC_send_link.send_link(case_id, hash_file)

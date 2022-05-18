@@ -9,6 +9,7 @@ import ipfshttpclient
 import decoders_encoders
 import re
 import rsa
+import SC_retrieve_link
 
 sender_address = 'aiufhaisufhgasdoif'
 
@@ -31,7 +32,8 @@ class HybridABEnc(ABEnc):
         c1, c2 = ct['c1'], ct['c2']
         key = self.abenc.decrypt(pk, sk, c1)
         if key is False:
-            raise Exception("failed to decrypt!")
+            return b' '
+            # raise Exception("failed to decrypt!")
         cipher = AuthenticatedCryptoAbstraction(sha2(key))
         return cipher.decrypt(c2)
 
@@ -72,22 +74,41 @@ def main(message):
     sk_data = x.fetchall()
     sk = decoders_encoders.key_decoder(sk_data[0][1])
 
-    # Connection to SQLite3 database
-    connection = sqlite3.connect('../SDM/Database_SDM/database.db')
-    k = connection.cursor()
+    # # Connection to SQLite3 database
+    # connection = sqlite3.connect('../SDM/Database_SDM/database.db')
+    # k = connection.cursor()
 
-    k.execute("SELECT * FROM ciphertext WHERE case_id=?", (message[2],))
-    ct_data = k.fetchall()
-    ct_data_check = ct_data[0][1]
-    if message[3] in ct_data_check:
-        print('e ora decifriamo')
+    # k.execute("SELECT * FROM ciphertext WHERE case_id=?", (message[2],))
+    # ct_data = k.fetchall()
+    # ct_data_check = ct_data[0][1]
 
-        api = ipfshttpclient.connect('/ip4/127.0.0.1/tcp/5001')
-        getfile = api.cat(ct_data[0][2])
-        find_separator = [m.start() for m in re.finditer(b'--->', getfile)]
-        if len(find_separator) == 0:
-            print('un solo messaggio')
-            test = json.loads(getfile)
+    ct_data_check = SC_retrieve_link.retrieve_link(message[2])
+    print(ct_data_check)
+    api = ipfshttpclient.connect('/ip4/127.0.0.1/tcp/5001')
+    getfile = api.cat(ct_data_check)
+    find_separator = [m.start() for m in re.finditer(b'--->', getfile)]
+    if len(find_separator) == 0:
+        print('un solo messaggio')
+        test = json.loads(getfile)
+        check_requester = test['message_id']
+        if check_requester == message[3]:
+            test1 = test['content']
+            test1 = decoders_encoders.ciphertext_decoder(test1)
+            mdec = hyb_abe.decrypt(pk, sk, test1)
+            salt = test['salt']
+            salt = bytes(salt, 'unicode_escape')
+            salt = salt.decode('unicode_escape').encode("raw_unicode_escape")
+            salt = rsa.decrypt(salt, privateKey_usable)
+            return mdec, salt
+    else:
+        for i in range(len(find_separator) + 1):
+            if i == 0:
+                check = getfile[:find_separator[i]]
+            elif i < len(find_separator):
+                check = getfile[find_separator[i - 1] + 4:find_separator[i]]
+            else:
+                check = getfile[find_separator[i - 1] + 4:]
+            test = json.loads(check)
             check_requester = test['message_id']
             if check_requester == message[3]:
                 test1 = test['content']
@@ -97,27 +118,10 @@ def main(message):
                 salt = bytes(salt, 'unicode_escape')
                 salt = salt.decode('unicode_escape').encode("raw_unicode_escape")
                 salt = rsa.decrypt(salt, privateKey_usable)
+                if mdec == b' ':
+                    return mdec, b'you cannot access that data'
                 return mdec, salt
-        else:
-            for i in range(len(find_separator)+1):
-                if i == 0:
-                    check = getfile[:find_separator[i]]
-                elif i < len(find_separator):
-                    check = getfile[find_separator[i - 1] + 4:find_separator[i]]
-                else:
-                    check = getfile[find_separator[i - 1] + 4:]
-                test = json.loads(check)
-                check_requester = test['message_id']
-                if check_requester == message[3]:
-                    test1 = test['content']
-                    test1 = decoders_encoders.ciphertext_decoder(test1)
-                    mdec = hyb_abe.decrypt(pk, sk, test1)
-                    salt = test['salt']
-                    salt = bytes(salt, 'unicode_escape')
-                    salt = salt.decode('unicode_escape').encode("raw_unicode_escape")
-                    salt = rsa.decrypt(salt, privateKey_usable)
-                    return mdec, salt
 
 
-if __name__ == "__main__":
-    main(message)
+# if __name__ == "__main__":
+#     main(message)

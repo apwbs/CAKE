@@ -5,7 +5,7 @@ import abenc_adapt_hybrid
 import abenc_adapt_hybrid_reading
 
 HEADER = 64
-PORT = 5052
+PORT = 5053
 server_cert = 'Keys/server.crt'
 server_key = 'Keys/server.key'
 client_certs = 'Keys/client.crt'
@@ -62,7 +62,6 @@ def handle_client(conn, addr):
                 conn.send(b'Ecco qui il link di IPFS key caro client: ' + response)
             if message[0] == "Please read my data":
                 response = read(message)
-                print(response)
                 conn.send(b'Ecco qui il testo e il salt caro client:\n\n' + response[0] + b'\n\n' + response[1])
 
     conn.close()
