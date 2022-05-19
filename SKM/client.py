@@ -39,11 +39,12 @@ def send(msg):
     print(receive)
 
 
-case_id = '7713620767953442560'
-message_id = '3572543105123232838'
-sender = '0x11'
-# send("Please generate my key//" + case_id + '//' + sender)
-send("Please read my data//" + sender + '//' + case_id + '//' + message_id)
+case_id = '8897945712264932062'
+message_id = '8654962570407031192'
+requester = '0xC869a3B0Aed8121c95d2F0016E7F4bBe2a5B9754'
+sender = '0x989ab0A74915727f4e9dd7057EE7db71bA3DFeaD'
+# send("Please generate my key//" + case_id + '//' + requester)
+send("Please read my data//" + requester + '//' + case_id + '//' + message_id + '//' + sender)
 # exit()
 # poi voglio più message_id non solo uno
 

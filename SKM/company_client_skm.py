@@ -25,13 +25,13 @@ def store_default_attributes():
 
 
 def retrieve_attributes(param):
-    x.execute("SELECT * FROM users_data", )
-    users_data = x.fetchall()
+    # x.execute("SELECT * FROM users_data", )
+    # users_data = x.fetchall()
     # print(users_data)
-    y.execute("SELECT * FROM attributes", )
-    attributes_data = y.fetchall()
+    # y.execute("SELECT * FROM attributes", )
+    # attributes_data = y.fetchall()
     # print(attributes_data)
-    get_blockchain_data(param)
+    return get_blockchain_data(param)
 
 
 ##################################################################
@@ -89,7 +89,8 @@ def get_blockchain_data(param):
     contract = web3.eth.contract(address=deployed_contract_address, abi=contract_abi)
 
     message = contract.functions.getUserInfo(param).call()
-    print(message)
+    return message
+    # print(message)
     # print(type(message))
     # print(type(message[0]))
 

@@ -30,7 +30,7 @@ function triggered by the client handler. Here starts the ciphering of the messa
 
 
 def create(message):
-    abenc_adapt_hybrid.main(message[1], message[2], message[3])
+    abenc_adapt_hybrid.main(message[1], message[2], message[3], message[4])
 
 
 """

@@ -11,7 +11,6 @@ import re
 import rsa
 import SC_retrieve_link
 
-sender_address = 'aiufhaisufhgasdoif'
 
 """
 Necessary ABE connections
@@ -75,17 +74,18 @@ def main(message):
     sk = decoders_encoders.key_decoder(sk_data[0][1])
 
     # # Connection to SQLite3 database
-    # connection = sqlite3.connect('../SDM/Database_SDM/database.db')
-    # k = connection.cursor()
+    connection = sqlite3.connect('../SDM/Database_SDM/database.db')
+    k = connection.cursor()
 
-    # k.execute("SELECT * FROM ciphertext WHERE case_id=?", (message[2],))
-    # ct_data = k.fetchall()
-    # ct_data_check = ct_data[0][1]
+    k.execute("SELECT * FROM ciphertext WHERE case_id=?", (message[2],))
+    ct_data = k.fetchall()
+    ct_data_check = ct_data[0][2]
 
-    ct_data_check = SC_retrieve_link.retrieve_link(message[2])
+    # ct_data_check = SC_retrieve_link.retrieve_link(message[2])
     api = ipfshttpclient.connect('/ip4/127.0.0.1/tcp/5001')
     getfile = api.cat(ct_data_check)
     find_separator = [m.start() for m in re.finditer(b'--->', getfile)]
+    find_separator_header = [m.start() for m in re.finditer(b'---\n---', getfile)]
     if len(find_separator) == 0:
         print('un solo messaggio')
         test = json.loads(getfile)
@@ -102,7 +102,7 @@ def main(message):
     else:
         for i in range(len(find_separator) + 1):
             if i == 0:
-                check = getfile[:find_separator[i]]
+                check = getfile[find_separator_header[0]+8:find_separator[i]]
             elif i < len(find_separator):
                 check = getfile[find_separator[i - 1] + 4:find_separator[i]]
             else:

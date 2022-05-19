@@ -11,7 +11,6 @@ import random
 import rsa
 import hashlib
 
-sender_address = 'aiufhaisufhgasdoif'
 
 """
 Necessary ABE connections
@@ -44,7 +43,7 @@ class HybridABEnc(ABEnc):
 """
 
 
-def main(message, access_policy, message_id):
+def main(message, access_policy, message_id, sender):
     groupObj = PairingGroup('SS512')
     cpabe = CPabe_BSW07(groupObj)
     hyb_abe = HybridABEnc(cpabe, groupObj)
@@ -79,7 +78,7 @@ def main(message, access_policy, message_id):
         conn = sqlite3.connect('Database_SDM/database.db')
         x = conn.cursor()
 
-        x.execute("INSERT OR IGNORE INTO ciphertext VALUES (?,?,?,?)", (sender_address, message_id, '', str(case_id)))
+        x.execute("INSERT OR IGNORE INTO ciphertext VALUES (?,?,?,?)", (sender, message_id, '', str(case_id)))
         conn.commit()
 
         # Connection to SQLite3 database
@@ -122,8 +121,7 @@ def main(message, access_policy, message_id):
         y.execute("INSERT OR IGNORE INTO pkmk_keys VALUES (?,?,?)", (str(case_id), pk_dumped, mk_dumped))
         connection.commit()
 
-        x.execute("INSERT OR IGNORE INTO ciphertext VALUES (?,?,?,?)",
-                  (sender_address, str(recipients), '', str(case_id)))
+        x.execute("INSERT OR IGNORE INTO ciphertext VALUES (?,?,?,?)", (sender, str(recipients), '', str(case_id)))
         conn.commit()
         message = message.decode('utf-8').split('//')
         access_policy = access_policy.split('//')
@@ -150,7 +148,7 @@ def main(message, access_policy, message_id):
             test_list.append((element[2], ct_dumped, hex_dig, salt_encrypted_dumped))
 
         # print(test_list)
-        write.main(test_list, case_id)
+        write.main(test_list, case_id, sender)
 
 
 if __name__ == "__main__":

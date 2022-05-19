@@ -4,9 +4,11 @@ from charm.toolbox.pairinggroup import PairingGroup, GT
 import json
 import sqlite3
 import decoders_encoders
+import company_client_skm
+import SC_retrieve_link
 
 # gli attributi sono da andare a chiedere allo Smart Contract
-# attributes = ['10', '52', '4904']
+# attributes_test = ['10', '52', '4904']
 attributes_0x11 = ['10']
 attributes_0x22 = ['4904']
 attributes_0x33 = ['52']
@@ -57,14 +59,30 @@ def main(message):
     mk_data_dumped = keys_data[0][2]
     mk = decoders_encoders.mk_decoder(mk_data_dumped)
 
-    if message[2] == '0x11':
+    if message[2] == '0x6B6E4913eF67a7611De6157CfCaa782F57670d7F':
         sk = hyb_abe.keygen(pk, mk, attributes_0x11)
-    elif message[2] == '0x22':
+    elif message[2] == '0xC869a3B0Aed8121c95d2F0016E7F4bBe2a5B9754':
         sk = hyb_abe.keygen(pk, mk, attributes_0x22)
     else:
         sk = hyb_abe.keygen(pk, mk, attributes_0x33)
 
-    # sk = hyb_abe.keygen(pk, mk, attributes)
+    # attributes = company_client_skm.retrieve_attributes(message[2])
+
+    # Connection to SQLite3 database1
+    # connectionj = sqlite3.connect('Database_SKM/attributes.db')
+    # j = connectionj.cursor()
+    # values_attributes = []
+    # for u in attributes:
+    #     j.execute("SELECT * FROM attributes WHERE key = ?", (u,))
+    #     attributes_values = j.fetchall()
+    #     attributes_values = attributes_values[0][1]
+    #     values_attributes.append(attributes_values)
+
+    # choose which version
+    # attributes_list_string = list(map(str, attributes))
+    # sk = hyb_abe.keygen(pk, mk, attributes_list_string)
+    # or
+    # sk = hyb_abe.keygen(pk, mk, values_attributes)
 
     sk_encoded = decoders_encoders.key_encoder(sk)
     sk_dumped = json.dumps(sk_encoded)
@@ -85,6 +103,10 @@ def main(message):
     k.execute("SELECT * FROM ciphertext WHERE case_id=?", (message[1],))
     ct_data = k.fetchall()
     ipfs_link = ct_data[0][2]
+
+    # ipfs_link = SC_retrieve_link.retrieve_link(message[1])
+    # print(message[1])
+    print(ipfs_link)
 
     return ipfs_link
 

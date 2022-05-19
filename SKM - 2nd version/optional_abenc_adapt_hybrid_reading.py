@@ -9,8 +9,6 @@ import sqlite3
 import ipfshttpclient
 import decoders_encoders
 
-sender_address = 'aiufhaisufhgasdoif'
-
 
 class HybridABEnc(ABEnc):
     def __init__(self, scheme, groupObj):
@@ -53,7 +51,7 @@ def main(message):
     connection = sqlite3.connect('../SDM/Database_SDM/database.db')
     k = connection.cursor()
 
-    k.execute("SELECT * FROM ciphertext WHERE sender_address=? AND recipient_address=?", (sender_address, message[1]))
+    k.execute("SELECT * FROM ciphertext WHERE sender_address=? AND recipient_address=?", (message[4], message[1]))
     ct_data = k.fetchall()
     # ct = decoders_encoders.ciphertext_decoder(ct_data[0][2])
 

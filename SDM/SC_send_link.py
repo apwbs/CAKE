@@ -2,12 +2,12 @@ import json
 from web3 import Web3
 from decouple import config
 
-web3 = Web3(Web3.HTTPProvider("https://ropsten.infura.io/v3/4a2091f61d304fd5b55251050b1fbe61"))
-sdm_ethereum_address = '0xD81Cbe02b50C19e01bC0931e3871963db8526B0E'
+web3 = Web3(Web3.HTTPProvider("https://ropsten.infura.io/v3/99e965c1136c4f62ab8dbd7ff52db8b6"))
+sdm_ethereum_address = '0x8aeC7b57FDA27F308533cC94Fb22005b73d5Ba6c'
 
-private_key = config('private_key')
+private_key = '5aca8cc67c51fc39fdf256394fef0a4c0bc136fade826e126f448f761e58d1f6'
 compiled_contract_path = '../Blockchain/build/contracts/Plus.json'
-deployed_contract_address = '0x491AC91F473E5B78A0476179Ad4072926d7DD4AD'
+deployed_contract_address = '0xe272E9669c99884E1E65B67DF683175bAF70f576'
 
 
 def get_nonce(ETH_address):
@@ -29,7 +29,6 @@ def send_link(account_address, attributes):
 
     message = contract.functions.setIPFSInfo(account_address, attributes).buildTransaction(tx)
     signed_transaction = web3.eth.account.sign_transaction(message, private_key)
-
     transaction_hash = web3.eth.send_raw_transaction(signed_transaction.rawTransaction)
     print('tx_hash')
     print(web3.toHex(transaction_hash))

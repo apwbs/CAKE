@@ -4,12 +4,13 @@ import json
 import os
 import SC_send_link
 
-sender_address = 'aiufhaisufhgasdoif'
 
-
-def main(test_list, case_id):
-    json_file = {
+def main(test_list, case_id, sender):
+    json_file_header = {
+        "sender": None,
         "case_id": None,
+    }
+    json_file = {
         "message_id": None,
         "hash": None,
         "salt": None,
@@ -24,18 +25,23 @@ def main(test_list, case_id):
     recipt_string = recipt_string[:-1]
     name_file = 'python_'+recipt_string+'.txt'
 
+    with open(name_file + 'test', 'a', encoding='utf-8') as f:
+        json_file_header['sender'] = str(sender)
+        json_file_header['case_id'] = str(case_id)
+        json.dump(json_file_header, f, ensure_ascii=False, indent=4)
+        f.write('\n' + '---\n---\n')
+
     for i in range(len(recipient)):
         with open(name_file + 'test', 'a', encoding='utf-8') as f:
-            json_file['case_id'] = str(case_id)
             json_file['message_id'] = test_list[i][0]
             json_file['content'] = test_list[i][1]
             json_file['hash'] = test_list[i][2]
             json_file['salt'] = test_list[i][3]
             json.dump(json_file, f, ensure_ascii=False, indent=4)
-            f.write('\n' + '--->')
+            f.write('\n' + '--->\n')
 
     with open(name_file + 'test', 'rb+') as filehandle:
-        filehandle.seek(-4, os.SEEK_END)
+        filehandle.seek(-5, os.SEEK_END)
         filehandle.truncate()
 
     api = ipfshttpclient.connect('/ip4/127.0.0.1/tcp/5001')
@@ -60,8 +66,6 @@ def main(test_list, case_id):
 
     x.execute(
         "UPDATE ciphertext SET ipfs_hash=? WHERE sender_address=? AND recipient_address=? AND case_id=?",
-        (hash_file, sender_address, str(recipient), str(case_id)))
+        (hash_file, sender, str(recipient), str(case_id)))
     conn.commit()
-    print(type(case_id))
-    print(type(hash_file))
     SC_send_link.send_link(case_id, hash_file)
