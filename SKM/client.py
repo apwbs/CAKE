@@ -1,3 +1,4 @@
+import json
 import socket
 import ssl
 
@@ -6,7 +7,7 @@ PORT = 5053
 FORMAT = 'utf-8'
 server_sni_hostname = 'example.com'
 DISCONNECT_MESSAGE = "!DISCONNECT"
-SERVER = "172.17.0.2"
+SERVER = "172.17.0.3"
 ADDR = (SERVER, PORT)
 server_cert = 'Keys/server.crt'
 client_cert = 'Keys/client.crt'
@@ -37,14 +38,20 @@ def send(msg):
     conn.send(message)
     receive = conn.recv(6000).decode(FORMAT)
     print(receive)
+    # with open("key_" + requester + ".txt", "w") as text_file:
+    #     text_file.write(json.dumps(receive[95:]))
 
 
-case_id = '8897945712264932062'
-message_id = '8654962570407031192'
+case_id = '2206302810394556865'
+message_id = '10322929677141064041'
 requester = '0xC869a3B0Aed8121c95d2F0016E7F4bBe2a5B9754'
-sender = '0x989ab0A74915727f4e9dd7057EE7db71bA3DFeaD'
+
+with open("key_" + requester + ".txt") as f:
+    requester_key = f.readlines()
+requester_key = requester_key[0]
+
 # send("Please generate my key//" + case_id + '//' + requester)
-send("Please read my data//" + requester + '//' + case_id + '//' + message_id + '//' + sender)
+send("Please read my data//" + case_id + '//' + message_id + '//' + requester_key)
 # exit()
 # poi voglio più message_id non solo uno
 

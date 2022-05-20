@@ -58,8 +58,9 @@ def handle_client(conn, addr):
             message = msg.split('//')
             if message[0] == "Please generate my key":
                 response = generate(message)
-                response = bytes(response, FORMAT)
-                conn.send(b'Ecco qui il link di IPFS key caro client: ' + response)
+                response_0 = bytes(str(response[0]), FORMAT)
+                response_1 = bytes(str(response[1]), FORMAT)
+                conn.send(b'Ecco qui il link di IPFS e la key caro client: ' + response_0 + b'\n\n' + response_1)
             if message[0] == "Please read my data":
                 response = read(message)
                 conn.send(b'Ecco qui il testo e il salt caro client:\n\n' + response[0] + b'\n\n' + response[1])

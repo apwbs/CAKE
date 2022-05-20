@@ -4,7 +4,7 @@ import threading
 import abenc_adapt_hybrid
 
 HEADER = 64
-PORT = 5051
+PORT = 5050
 server_cert = 'Keys/server.crt'
 server_key = 'Keys/server.key'
 client_certs = 'Keys/client.crt'

@@ -55,42 +55,26 @@ def main(message):
     user_privateKey = b.fetchall()
     privateKey_usable = rsa.PrivateKey.load_pkcs1(user_privateKey[0][1])
 
-    # Connection to SQLite3 database1
-    connection1 = sqlite3.connect('../Pk_Mk/keys.db')
-    y = connection1.cursor()
-
-    y.execute("SELECT * FROM pkmk_keys WHERE recipient_address = ?", (message[2],))
-    keys_data = y.fetchall()
-
-    pk_data_dumped = keys_data[0][1]
-    pk = decoders_encoders.pk_decoder(pk_data_dumped)
-
-    # Connection to SQLite3 database
-    conn = sqlite3.connect('Database_SKM/database.db')
-    x = conn.cursor()
-
-    x.execute("SELECT * FROM keys WHERE requester_address=?", (message[1],))
-    sk_data = x.fetchall()
-    sk = decoders_encoders.key_decoder(sk_data[0][1])
-
-    # # Connection to SQLite3 database
-    connection = sqlite3.connect('../SDM/Database_SDM/database.db')
-    k = connection.cursor()
-
-    k.execute("SELECT * FROM ciphertext WHERE case_id=?", (message[2],))
-    ct_data = k.fetchall()
-    ct_data_check = ct_data[0][2]
-
-    # ct_data_check = SC_retrieve_link.retrieve_link(message[2])
+    ipfs_link = SC_retrieve_link.retrieve_link(message[1])
     api = ipfshttpclient.connect('/ip4/127.0.0.1/tcp/5001')
-    getfile = api.cat(ct_data_check)
+    print(api)
+    getfile = api.cat(ipfs_link)
+    find_separator_header = [m.start() for m in re.finditer(b'---\n---', getfile)]
+    check = getfile[:find_separator_header[0]]
+    test = json.loads(check)
+    pk_encrypted = test['pk']
+    pk = decoders_encoders.pk_decoder(pk_encrypted)
+
+    # message[3] = json.loads(message[3])
+    sk = decoders_encoders.key_decoder(message[3])
+
     find_separator = [m.start() for m in re.finditer(b'--->', getfile)]
     find_separator_header = [m.start() for m in re.finditer(b'---\n---', getfile)]
     if len(find_separator) == 0:
         print('un solo messaggio')
         test = json.loads(getfile)
         check_requester = test['message_id']
-        if check_requester == message[3]:
+        if check_requester == message[2]:
             test1 = test['content']
             test1 = decoders_encoders.ciphertext_decoder(test1)
             mdec = hyb_abe.decrypt(pk, sk, test1)
@@ -109,7 +93,7 @@ def main(message):
                 check = getfile[find_separator[i - 1] + 4:]
             test = json.loads(check)
             check_requester = test['message_id']
-            if check_requester == message[3]:
+            if check_requester == message[2]:
                 test1 = test['content']
                 test1 = decoders_encoders.ciphertext_decoder(test1)
                 mdec = hyb_abe.decrypt(pk, sk, test1)

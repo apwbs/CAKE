@@ -5,10 +5,12 @@ import os
 import SC_send_link
 
 
-def main(test_list, case_id, sender):
+def main(test_list, case_id, sender, pk_dumped, mk_dumped):
     json_file_header = {
         "sender": None,
         "case_id": None,
+        "pk": None,
+        "mk": None,
     }
     json_file = {
         "message_id": None,
@@ -28,6 +30,8 @@ def main(test_list, case_id, sender):
     with open(name_file + 'test', 'a', encoding='utf-8') as f:
         json_file_header['sender'] = str(sender)
         json_file_header['case_id'] = str(case_id)
+        json_file_header['pk'] = pk_dumped
+        json_file_header['mk'] = mk_dumped
         json.dump(json_file_header, f, ensure_ascii=False, indent=4)
         f.write('\n' + '---\n---\n')
 
@@ -56,16 +60,16 @@ def main(test_list, case_id, sender):
     #     text_file.write('\n' + hash_file)
 
     # Connection to SQLite3 database
-    conn = sqlite3.connect('Database_SDM/database.db')
-    x = conn.cursor()
+    # conn = sqlite3.connect('Database_SDM/database.db')
+    # x = conn.cursor()
 
     # x.execute(
     #     "UPDATE ciphertext SET ipfs_hash=? WHERE sender_address=? AND recipient_address=? AND case_id=?",
     #     (hash_file, sender_address, recipient[0], str(case_id)))
     # conn.commit()
 
-    x.execute(
-        "UPDATE ciphertext SET ipfs_hash=? WHERE sender_address=? AND recipient_address=? AND case_id=?",
-        (hash_file, sender, str(recipient), str(case_id)))
-    conn.commit()
+    # x.execute(
+    #     "UPDATE ciphertext SET ipfs_hash=? WHERE sender_address=? AND recipient_address=? AND case_id=?",
+    #     (hash_file, sender, str(recipient), str(case_id)))
+    # conn.commit()
     SC_send_link.send_link(case_id, hash_file)

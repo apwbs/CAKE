@@ -3,11 +3,11 @@ import ssl
 import random
 
 HEADER = 64
-PORT = 5051
+PORT = 5050
 FORMAT = 'utf-8'
 server_sni_hostname = 'example.com'
 DISCONNECT_MESSAGE = "!DISCONNECT"
-SERVER = "172.17.0.2"
+SERVER = "172.17.0.3"
 ADDR = (SERVER, PORT)
 server_cert = 'Keys/server.crt'
 client_cert = 'Keys/client.crt'
@@ -40,8 +40,12 @@ def send(msg):
 
 
 # policy = '((four or three) and (two or one))'
-text = 'Ciao Marzia!//Ciao Claudio//Ciao ciao ciao ciao'
-policy = '10//4904//52'
+text = 'Company_name: Alpha\n' \
+       'Address: 34, Alpha street\n' \
+       'E-mail:company.alpha@mail.com\n' \
+       'Quantity:5\n' \
+       'Amount_payed:5000$//Ciao Claudio//Ciao ciao ciao ciao'
+policy = '(16 and 3 and 86)//(4 or 77)//52'
 sender = '0x989ab0A74915727f4e9dd7057EE7db71bA3DFeaD'
 # text = 'ciao Marzia!'
 # policy = '10'

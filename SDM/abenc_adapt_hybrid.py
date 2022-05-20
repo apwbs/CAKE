@@ -61,25 +61,24 @@ def main(message, access_policy, message_id, sender):
         print('Example with one policy and one receiver')
 
         # Connection to SQLite3 database
-        connection = sqlite3.connect('../Pk_Mk/keys.db')
-        y = connection.cursor()
+        # connection = sqlite3.connect('../Pk_Mk/keys.db')
+        # y = connection.cursor()
 
         case_id = random.randint(1, 2 ** 64)
 
-        y.execute("INSERT OR IGNORE INTO pkmk_keys VALUES (?,?,?)", (str(case_id), pk_dumped, mk_dumped))
-        connection.commit()
+        # y.execute("INSERT OR IGNORE INTO pkmk_keys VALUES (?,?,?)", (str(case_id), pk_dumped, mk_dumped))
+        # connection.commit()
 
         ct = hyb_abe.encrypt(pk, message, access_policy)
-        print(ct)
         ct_encoded = econders_decoders.ciphertext_encoder(ct)
         ct_dumped = json.dumps(ct_encoded)
 
         # Connection to SQLite3 database
-        conn = sqlite3.connect('Database_SDM/database.db')
-        x = conn.cursor()
-
-        x.execute("INSERT OR IGNORE INTO ciphertext VALUES (?,?,?,?)", (sender, message_id, '', str(case_id)))
-        conn.commit()
+        # conn = sqlite3.connect('Database_SDM/database.db')
+        # x = conn.cursor()
+        #
+        # x.execute("INSERT OR IGNORE INTO ciphertext VALUES (?,?,?,?)", (sender, message_id, '', str(case_id)))
+        # conn.commit()
 
         # Connection to SQLite3 database
         connection1 = sqlite3.connect('../Pk_Mk/public_keys.db')
@@ -105,24 +104,12 @@ def main(message, access_policy, message_id, sender):
     else:
         print('I am trying this one')
 
-        # Connection to SQLite3 database
-        connection = sqlite3.connect('../Pk_Mk/keys.db')
-        y = connection.cursor()
-        # Connection to SQLite3 database
-        conn = sqlite3.connect('Database_SDM/database.db')
-        x = conn.cursor()
-        # Connection to SQLite3 database
         connection1 = sqlite3.connect('../Pk_Mk/public_keys.db')
         k = connection1.cursor()
 
         recipients = message_id.split('//')
         case_id = random.randint(1, 2 ** 64)
 
-        y.execute("INSERT OR IGNORE INTO pkmk_keys VALUES (?,?,?)", (str(case_id), pk_dumped, mk_dumped))
-        connection.commit()
-
-        x.execute("INSERT OR IGNORE INTO ciphertext VALUES (?,?,?,?)", (sender, str(recipients), '', str(case_id)))
-        conn.commit()
         message = message.decode('utf-8').split('//')
         access_policy = access_policy.split('//')
         list_paired = list(zip(message, access_policy, recipients))
@@ -144,11 +131,9 @@ def main(message, access_policy, message_id, sender):
             ct = hyb_abe.encrypt(pk, element[0], element[1])
             ct_encoded = econders_decoders.ciphertext_encoder(ct)
             ct_dumped = json.dumps(ct_encoded)
-            # ct_dumped_encrypted = rsa_sdm.encrypt(ct_dumped)
             test_list.append((element[2], ct_dumped, hex_dig, salt_encrypted_dumped))
 
-        # print(test_list)
-        write.main(test_list, case_id, sender)
+        write.main(test_list, case_id, sender, pk_dumped, mk_dumped)
 
 
 if __name__ == "__main__":

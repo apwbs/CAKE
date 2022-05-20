@@ -5,6 +5,13 @@ import sqlite3
 
 
 def pk_encoder(pk):
+    conn = sqlite3.connect('../Pk_Mk/public_keys.db')
+    x = conn.cursor()
+
+    x.execute("SELECT * FROM publicKeys WHERE server = ?", ('SKM',))
+    user_publicKey = x.fetchall()
+    publicKey_usable = rsa.PublicKey.load_pkcs1(user_publicKey[0][1])
+
     Pk_dict = {'g': None, 'g2': None, 'h': None, 'f': None, 'e_gg_alpha': None}
 
     global groupObj
@@ -12,43 +19,57 @@ def pk_encoder(pk):
 
     g = pk['g']
     g = groupObj.serialize(g)
-    g = g.decode('utf-8')
+    g = rsa.encrypt(g, publicKey_usable)
+    g = "".join(chr(i) for i in g)
     Pk_dict['g'] = g
 
     g2 = pk['g2']
     g2 = groupObj.serialize(g2)
-    g2 = g2.decode('utf-8')
+    g2 = rsa.encrypt(g2, publicKey_usable)
+    g2 = "".join(chr(i) for i in g2)
     Pk_dict['g2'] = g2
 
     h = pk['h']
     h = groupObj.serialize(h)
-    h = h.decode('utf-8')
+    h = rsa.encrypt(h, publicKey_usable)
+    h = "".join(chr(i) for i in h)
     Pk_dict['h'] = h
 
     f = pk['h']
     f = groupObj.serialize(f)
-    f = f.decode('utf-8')
+    f = rsa.encrypt(f, publicKey_usable)
+    f = "".join(chr(i) for i in f)
     Pk_dict['f'] = f
 
     e_gg_alpha = pk['e_gg_alpha']
     e_gg_alpha = groupObj.serialize(e_gg_alpha)
-    e_gg_alpha = e_gg_alpha.decode('utf-8')
+    e_gg_alpha = rsa.encrypt(e_gg_alpha, publicKey_usable)
+    e_gg_alpha = "".join(chr(i) for i in e_gg_alpha)
     Pk_dict['e_gg_alpha'] = e_gg_alpha
 
     return Pk_dict
 
 
 def mk_encoder(mk):
+    conn = sqlite3.connect('../Pk_Mk/public_keys.db')
+    x = conn.cursor()
+
+    x.execute("SELECT * FROM publicKeys WHERE server = ?", ('SKM',))
+    user_publicKey = x.fetchall()
+    publicKey_usable = rsa.PublicKey.load_pkcs1(user_publicKey[0][1])
+
     Mk_dict = {'beta': None, 'g2_alpha': None}
 
     beta = mk['beta']
     beta = groupObj.serialize(beta)
-    beta = beta.decode('utf-8')
+    beta = rsa.encrypt(beta, publicKey_usable)
+    beta = "".join(chr(i) for i in beta)
     Mk_dict['beta'] = beta
 
     g2_alpha = mk['g2_alpha']
     g2_alpha = groupObj.serialize(g2_alpha)
-    g2_alpha = g2_alpha.decode('utf-8')
+    g2_alpha = rsa.encrypt(g2_alpha, publicKey_usable)
+    g2_alpha = "".join(chr(i) for i in g2_alpha)
     Mk_dict['g2_alpha'] = g2_alpha
 
     return Mk_dict
