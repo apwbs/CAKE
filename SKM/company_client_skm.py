@@ -2,10 +2,6 @@ import sqlite3
 from web3 import Web3, HTTPProvider
 import json
 
-# Connection to SQLite3 users database
-conn = sqlite3.connect('Database_SKM/users.db')
-x = conn.cursor()
-
 # Connection to SQLite3 attributes database
 connection = sqlite3.connect('Database_SKM/attributes.db')
 y = connection.cursor()
@@ -25,12 +21,6 @@ def store_default_attributes():
 
 
 def retrieve_attributes(param):
-    # x.execute("SELECT * FROM users_data", )
-    # users_data = x.fetchall()
-    # print(users_data)
-    # y.execute("SELECT * FROM attributes", )
-    # attributes_data = y.fetchall()
-    # print(attributes_data)
     return get_blockchain_data(param)
 
 
@@ -91,15 +81,9 @@ def get_blockchain_data(param):
     message = contract.functions.getUserInfo(param).call()
     # print(message)
     return message
-    # print(message)
-    # print(type(message))
-    # print(type(message[0]))
 
 
-def give_attributes(param):
-    for item in param.items():
-        x.execute("INSERT OR IGNORE INTO users_data VALUES (?,?)", (item[0], str(item[1])))
-        conn.commit()
+def give_attributes():
     blockchain_interaction()
 
 
