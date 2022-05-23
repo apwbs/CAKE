@@ -65,7 +65,6 @@ def main(message):
     pk_encrypted = test['pk']
     pk = decoders_encoders.pk_decoder(pk_encrypted)
 
-    # message[3] = json.loads(message[3])
     sk = decoders_encoders.key_decoder(message[3])
 
     find_separator = [m.start() for m in re.finditer(b'--->', getfile)]
