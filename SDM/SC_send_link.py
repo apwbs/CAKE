@@ -32,7 +32,10 @@ def send_link(account_address, attributes):
     transaction_hash = web3.eth.send_raw_transaction(signed_transaction.rawTransaction)
     print('tx_hash')
     print(web3.toHex(transaction_hash))
-
+    tx_receipt = web3.eth.wait_for_transaction_receipt(transaction_hash)
+    # print(tx_receipt)
+    with open('IPFS_links.txt', 'a') as fp:
+        fp.write(str(tx_receipt) + '\n\n\n')
 
 # case_id = 4325525822372369570
 # ipfs_link = 'QmZw44QMpqRs5g5pFCrfQ1HzzDQSecKWwFhrKUCwr6hDGt'

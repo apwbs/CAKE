@@ -68,6 +68,7 @@ def blockchain_interaction(item):
     message = contract.functions.setUserInfo(item[0], item[1]).buildTransaction(tx)
     signed_transaction = web3.eth.account.sign_transaction(message, private_key)
     transaction_hash = web3.eth.send_raw_transaction(signed_transaction.rawTransaction)
+    print('tx_hash')
     print(web3.toHex(transaction_hash))
     tx_receipt = web3.eth.wait_for_transaction_receipt(transaction_hash)
     print(tx_receipt)
@@ -119,7 +120,7 @@ dict_users = {
 }
 
 # address = '0x6B6E4913eF67a7611De6157CfCaa782F57670d7F'
-if __name__ == "__main__":
+# if __name__ == "__main__":
     # store_default_attributes()
-    give_attributes()
+    # give_attributes()
     # retrieve_attributes(address)
