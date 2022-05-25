@@ -21,11 +21,11 @@ contract Plus {
     return AllUsers[Address].attributes;
   }
 
-  function setIPFSInfo(uint256 CaseID, string memory _link) public {
+  function setIPFSInfo(uint64 CaseID, string memory _link) public {
     AllLinks[CaseID].link= _link;
   }
 
-  function getIPFSInfo(uint256 CaseID) public view returns (string memory) {
+  function getIPFSInfo(uint64 CaseID) public view returns (string memory) {
     return AllLinks[CaseID].link;
   }
 

@@ -71,7 +71,8 @@ def main(message):
     find_separator_header = [m.start() for m in re.finditer(b'---\n---', getfile)]
     if len(find_separator) == 0:
         print('un solo messaggio')
-        test = json.loads(getfile)
+        check = getfile[find_separator_header[0]+8:]
+        test = json.loads(check)
         check_requester = test['message_id']
         if check_requester == message[2]:
             test1 = test['content']

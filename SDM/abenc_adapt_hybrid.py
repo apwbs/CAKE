@@ -60,25 +60,11 @@ def main(message, access_policy, message_id, sender):
     if message_decoded.find('//') == -1:
         print('Example with one policy and one receiver')
 
-        # Connection to SQLite3 database
-        # connection = sqlite3.connect('../Pk_Mk/keys.db')
-        # y = connection.cursor()
-
         case_id = random.randint(1, 2 ** 64)
-
-        # y.execute("INSERT OR IGNORE INTO pkmk_keys VALUES (?,?,?)", (str(case_id), pk_dumped, mk_dumped))
-        # connection.commit()
 
         ct = hyb_abe.encrypt(pk, message, access_policy)
         ct_encoded = econders_decoders.ciphertext_encoder(ct)
         ct_dumped = json.dumps(ct_encoded)
-
-        # Connection to SQLite3 database
-        # conn = sqlite3.connect('Database_SDM/database.db')
-        # x = conn.cursor()
-        #
-        # x.execute("INSERT OR IGNORE INTO ciphertext VALUES (?,?,?,?)", (sender, message_id, '', str(case_id)))
-        # conn.commit()
 
         # Connection to SQLite3 database
         connection1 = sqlite3.connect('../Pk_Mk/public_keys.db')
@@ -100,7 +86,7 @@ def main(message, access_policy, message_id, sender):
         test_list = []
         test_list.append((message_id, ct_dumped, hex_dig, salt_encrypted_dumped))
 
-        write.main(test_list, case_id)
+        write.main(test_list, case_id, sender, pk_dumped, mk_dumped)
     else:
         print('I am trying this one')
 

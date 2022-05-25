@@ -72,4 +72,4 @@ def main(test_list, case_id, sender, pk_dumped, mk_dumped):
     #     "UPDATE ciphertext SET ipfs_hash=? WHERE sender_address=? AND recipient_address=? AND case_id=?",
     #     (hash_file, sender, str(recipient), str(case_id)))
     # conn.commit()
-    SC_send_link.send_link(case_id, hash_file)
+    SC_send_link.send_link_test(case_id, hash_file)

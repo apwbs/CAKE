@@ -42,9 +42,9 @@ def send(msg):
     #     text_file.write(json.dumps(receive[95:]))
 
 
-case_id = '16354639432123757869'
-message_id = '14876776061410117321'
-requester = '0xC869a3B0Aed8121c95d2F0016E7F4bBe2a5B9754'
+case_id = '14940296777170662232'
+message_id = '7210908782302486520'
+requester = '0xA5dfE42d5BE39A3aE6c45ED7aBbCD77F8647D54B'
 
 with open("key_" + requester + ".txt") as f:
     requester_key = f.readlines()
