@@ -70,7 +70,7 @@ def blockchain_interaction(item):
     transaction_hash = web3.eth.send_raw_transaction(signed_transaction.rawTransaction)
     print('tx_hash')
     print(web3.toHex(transaction_hash))
-    tx_receipt = web3.eth.wait_for_transaction_receipt(transaction_hash)
+    tx_receipt = web3.eth.wait_for_transaction_receipt(transaction_hash, timeout=800)
     print(tx_receipt)
     receipts.append(tx_receipt)
     with open('receipts.txt', 'a') as fp:

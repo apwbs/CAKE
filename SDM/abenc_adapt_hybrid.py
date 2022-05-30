@@ -10,6 +10,8 @@ import econders_decoders
 import random
 import rsa
 import hashlib
+from datetime import datetime
+import re
 
 
 """
@@ -43,7 +45,7 @@ class HybridABEnc(ABEnc):
 """
 
 
-def main(message, access_policy, message_id, sender):
+def main(message, access_policy, sender):
     groupObj = PairingGroup('SS512')
     cpabe = CPabe_BSW07(groupObj)
     hyb_abe = HybridABEnc(cpabe, groupObj)
@@ -61,6 +63,10 @@ def main(message, access_policy, message_id, sender):
         print('Example with one policy and one receiver')
 
         case_id = random.randint(1, 2 ** 64)
+        now = datetime.now()
+        now = int(now.strftime("%Y%m%d%H%M%S%f"))
+        random.seed(now)
+        message_id = random.randint(1, 2 ** 64)
 
         ct = hyb_abe.encrypt(pk, message, access_policy)
         ct_encoded = econders_decoders.ciphertext_encoder(ct)
@@ -83,8 +89,7 @@ def main(message, access_policy, message_id, sender):
         s_1_hashed = hashlib.sha256(s_1)
         hex_dig = s_1_hashed.hexdigest()
 
-        test_list = []
-        test_list.append((message_id, ct_dumped, hex_dig, salt_encrypted_dumped))
+        test_list = [(str(message_id), ct_dumped, hex_dig, salt_encrypted_dumped)]
 
         write.main(test_list, case_id, sender, pk_dumped, mk_dumped)
     else:
@@ -93,12 +98,18 @@ def main(message, access_policy, message_id, sender):
         connection1 = sqlite3.connect('../Pk_Mk/public_keys.db')
         k = connection1.cursor()
 
-        recipients = message_id.split('//')
+        find_number_messages = [m.start() for m in re.finditer('//', message_decoded)]
+        message_id_list = []
+        for i in range(len(find_number_messages)+1):
+            message_id_list.append(random.randint(1, 2 ** 64))
+
         case_id = random.randint(1, 2 ** 64)
 
         message = message.decode('utf-8').split('//')
         access_policy = access_policy.split('//')
-        list_paired = list(zip(message, access_policy, recipients))
+        list_string = map(str, message_id_list)
+        list_paired = list(zip(message, access_policy, list(list_string)))
+
         test_list = []
 
         k.execute("SELECT * FROM publicKeys WHERE server = ?", ('SKM',))

@@ -11,9 +11,9 @@ import re
 
 # gli attributi sono da andare a chiedere allo Smart Contract
 # attributes_test = ['10', '52', '4904']
-attributes_0x11 = ['10']
-attributes_0x22 = ['4904']
-attributes_0x33 = ['52']
+# attributes_0x11 = ['10']
+# attributes_0x22 = ['4904']
+# attributes_0x33 = ['52']
 # attributes = ['FOUR', 'TWO']
 
 """
@@ -49,6 +49,7 @@ def main(message):
     hyb_abe = HybridABEnc(cpabe, groupObj)
 
     ipfs_link = SC_retrieve_link.retrieve_link(message[1])
+    print(ipfs_link)
     api = ipfshttpclient.connect('/ip4/127.0.0.1/tcp/5001')
     print(api)
     getfile = api.cat(ipfs_link)

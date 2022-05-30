@@ -4,7 +4,7 @@ import threading
 import abenc_adapt_hybrid
 
 HEADER = 64
-PORT = 5050
+PORT = 5052
 server_cert = 'Keys/server.crt'
 server_key = 'Keys/server.key'
 client_certs = 'Keys/client.crt'
@@ -30,7 +30,7 @@ function triggered by the client handler. Here starts the ciphering of the messa
 
 
 def create(message):
-    abenc_adapt_hybrid.main(message[1], message[2], message[3], message[4])
+    abenc_adapt_hybrid.main(message[1], message[2], message[3])
 
 
 """

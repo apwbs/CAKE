@@ -38,15 +38,15 @@ def send(msg):
     conn.send(message)
     receive = conn.recv(6000).decode(FORMAT)
     print(receive)
-    # with open("key_" + requester + ".txt", "w") as text_file:
+    # with open("key_" + requester + "--caseid_" + case_id + ".txt", "w") as text_file:
     #     text_file.write(json.dumps(receive[95:]))
 
 
-case_id = '14940296777170662232'
-message_id = '7210908782302486520'
+case_id = '11890850088436169064'
+message_id = '6464201672974104716'
 requester = '0xA5dfE42d5BE39A3aE6c45ED7aBbCD77F8647D54B'
 
-with open("key_" + requester + ".txt") as f:
+with open("key_" + requester + "--caseid_" + case_id + ".txt") as f:
     requester_key = f.readlines()
 requester_key = requester_key[0]
 
