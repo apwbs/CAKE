@@ -1,0 +1,4 @@
+calc,   gasUsed [unit],gasPrice [wei],Total cost [EUR],ETH/EUR value,
+average,40755,         1370810611,    €0.09734,        €1746.35,
+min,    40755,         1000000007,    €0.07475,        €1650.68,
+max,    40755,         1644053019,    €0.11191,        €1834.14,
