@@ -15,7 +15,7 @@ def retrieve_link(case_id):
 
     contract = web3.eth.contract(address=deployed_contract_address, abi=contract_abi)
 
-    message = contract.functions.getHash(int(case_id)).call()
+    message = contract.functions.getIPFSInfo(int(case_id)).call()
     message_bytes = base64.b64decode(message)
     message = message_bytes.decode('ascii')
     return message

@@ -28,7 +28,7 @@ def send_link(account_address, attributes):
     }
     message_bytes = attributes.encode('ascii')
     base64_bytes = base64.b64encode(message_bytes)
-    message = contract.functions.updateHash(account_address, base64_bytes[:32], base64_bytes[32:]).buildTransaction(tx)
+    message = contract.functions.setIPFSInfo(account_address, base64_bytes[:32], base64_bytes[32:]).buildTransaction(tx)
     signed_transaction = web3.eth.account.sign_transaction(message, private_key)
     transaction_hash = web3.eth.send_raw_transaction(signed_transaction.rawTransaction)
     print('tx_hash')
