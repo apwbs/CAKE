@@ -56,20 +56,4 @@ def main(test_list, case_id, sender, pk_dumped, mk_dumped):
     print('ipfs hash')
     print(hash_file)
 
-    # with open(name_file, "a") as text_file:
-    #     text_file.write('\n' + hash_file)
-
-    # Connection to SQLite3 database
-    # conn = sqlite3.connect('Database_SDM/database.db')
-    # x = conn.cursor()
-
-    # x.execute(
-    #     "UPDATE ciphertext SET ipfs_hash=? WHERE sender_address=? AND recipient_address=? AND case_id=?",
-    #     (hash_file, sender_address, recipient[0], str(case_id)))
-    # conn.commit()
-
-    # x.execute(
-    #     "UPDATE ciphertext SET ipfs_hash=? WHERE sender_address=? AND recipient_address=? AND case_id=?",
-    #     (hash_file, sender, str(recipient), str(case_id)))
-    # conn.commit()
-    SC_send_link.send_link_test(case_id, hash_file)
+    SC_send_link.send_link(case_id, hash_file)

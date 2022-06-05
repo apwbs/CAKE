@@ -1,7 +1,5 @@
 import socket
 import ssl
-import random
-from datetime import datetime
 
 HEADER = 64
 PORT = 5052
@@ -46,7 +44,7 @@ text = 'Manufacturer_company: Beta\nAddress: 82, Beta street\nE-mail: manufactur
        'Amount_payed: 12000$'
 policy = '(1621 and 862341)'
 sender = '0x989ab0A74915727f4e9dd7057EE7db71bA3DFeaD'
-# send("Please cipher this message||" + text + "||" + policy + "||" + message_ids + "||" + sender)
+
 send("Please cipher this message||" + text + "||" + policy + "||" + sender)
 exit()
 input()

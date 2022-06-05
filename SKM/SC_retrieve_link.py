@@ -19,7 +19,3 @@ def retrieve_link(case_id):
     message_bytes = base64.b64decode(message)
     message = message_bytes.decode('ascii')
     return message
-
-
-# if __name__ == "__main__":
-#     retrieve_link()

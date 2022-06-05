@@ -1,6 +1,7 @@
 import sqlite3
-from web3 import Web3, HTTPProvider
+from web3 import Web3
 import json
+from decouple import config
 
 # Connection to SQLite3 attributes database
 connection = sqlite3.connect('Database_SKM/attributes.db')
@@ -41,11 +42,11 @@ receipts = []
 
 
 def blockchain_interaction(item):
-    web3.eth.defaultAccount = '0x405EFF715C40093b7bb1a4B19f4b7880935A89b2'
-    private_key = 'c7ea15d89ce6732b8d80aeec48cc5d3aef9d91b5ef1090c10b46706f1dfbaace'
+    web3.eth.defaultAccount = config('DEFAULT_ACCOUNT')
+    private_key = config('PRIVATE_KEY')
 
     compiled_contract_path = '../Blockchain/build/contracts/Guai.json'
-    deployed_contract_address = '0x2D9EAe20E1E7515d47fBB9A5d454Ce7Be59cA03f'
+    deployed_contract_address = config('CONTRACT_ADDRESS')
 
     with open(compiled_contract_path) as file:
         contract_json = json.load(file)
@@ -79,7 +80,7 @@ def blockchain_interaction(item):
 
 def get_blockchain_data(param):
     compiled_contract_path = '../Blockchain/build/contracts/Guai.json'
-    deployed_contract_address = '0x2D9EAe20E1E7515d47fBB9A5d454Ce7Be59cA03f'
+    deployed_contract_address = config('CONTRACT_ADDRESS')
 
     with open(compiled_contract_path) as file:
         contract_json = json.load(file)
@@ -95,11 +96,6 @@ def get_blockchain_data(param):
 def give_attributes():
     for item in dict_users.items():
         blockchain_interaction(item)
-    # print(receipts)
-    # print(type(receipts))
-    # with open('receipts.txt', 'w') as fp:
-    #     for item in receipts:
-    #         fp.write(str(item) + '\n\n\n')
 
 
 # dict_users = {
@@ -121,7 +117,7 @@ dict_users = {
     '0x1EB869698F7237FFCeB72EE394C484Fc8DC02a9D': [812, 82, 29, 824219, 7234, 124432, 7381, 563442]
 }
 
-# address = '0x6B6E4913eF67a7611De6157CfCaa782F57670d7F'
+# address = '0x9D2e04426555A246340ead3F64f6882C997d209a'
 if __name__ == "__main__":
     # store_default_attributes()
     give_attributes()

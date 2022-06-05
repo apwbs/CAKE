@@ -70,7 +70,6 @@ def main(message):
     find_separator = [m.start() for m in re.finditer(b'--->', getfile)]
     find_separator_header = [m.start() for m in re.finditer(b'---\n---', getfile)]
     if len(find_separator) == 0:
-        print('un solo messaggio')
         check = getfile[find_separator_header[0]+8:]
         test = json.loads(check)
         check_requester = test['message_id']
@@ -104,7 +103,3 @@ def main(message):
                 if mdec == b' ':
                     return mdec, b'you cannot access that data'
                 return mdec, salt
-
-
-# if __name__ == "__main__":
-#     main(message)

@@ -2,19 +2,12 @@ from charm.toolbox.ABEnc import ABEnc
 from charm.schemes.abenc.abenc_bsw07 import CPabe_BSW07
 from charm.toolbox.pairinggroup import PairingGroup, GT
 import json
-import sqlite3
 import decoders_encoders
 import company_client_skm
 import SC_retrieve_link
 import ipfshttpclient
 import re
 
-# gli attributi sono da andare a chiedere allo Smart Contract
-# attributes_test = ['10', '52', '4904']
-# attributes_0x11 = ['10']
-# attributes_0x22 = ['4904']
-# attributes_0x33 = ['52']
-# attributes = ['FOUR', 'TWO']
 
 """
 Necessary ABE connections
@@ -60,13 +53,6 @@ def main(message):
     pk = decoders_encoders.pk_decoder(pk_encrypted)
     mk_encrypted = test['mk']
     mk = decoders_encoders.mk_decoder(mk_encrypted)
-
-    # if message[2] == '0x6B6E4913eF67a7611De6157CfCaa782F57670d7F':
-    #     sk = hyb_abe.keygen(pk, mk, attributes_0x11)
-    # elif message[2] == '0xC869a3B0Aed8121c95d2F0016E7F4bBe2a5B9754':
-    #     sk = hyb_abe.keygen(pk, mk, attributes_0x22)
-    # else:
-    #     sk = hyb_abe.keygen(pk, mk, attributes_0x33)
 
     attributes = company_client_skm.retrieve_attributes(message[2])
 
