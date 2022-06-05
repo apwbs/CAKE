@@ -3,3 +3,4 @@
 /Blockchain/.secret
 /SDM/.env
 secret_mnemonic
+/SKM/Database_SKM/private_key.db
