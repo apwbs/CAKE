@@ -62,10 +62,10 @@ def main(message, access_policy, sender):
     if message_decoded.find('//') == -1:
         print('Example with one policy and one receiver')
 
-        case_id = random.randint(1, 2 ** 64)
         now = datetime.now()
         now = int(now.strftime("%Y%m%d%H%M%S%f"))
         random.seed(now)
+        case_id = random.randint(1, 2 ** 64)
         message_id = random.randint(1, 2 ** 64)
 
         ct = hyb_abe.encrypt(pk, message, access_policy)
@@ -97,6 +97,10 @@ def main(message, access_policy, sender):
 
         connection1 = sqlite3.connect('../Pk_Mk/public_keys.db')
         k = connection1.cursor()
+
+        now = datetime.now()
+        now = int(now.strftime("%Y%m%d%H%M%S%f"))
+        random.seed(now)
 
         find_number_messages = [m.start() for m in re.finditer('//', message_decoded)]
         message_id_list = []
