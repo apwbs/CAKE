@@ -5,10 +5,10 @@ import os
 import SC_send_link
 
 
-def main(test_list, case_id, sender, pk_dumped, mk_dumped):
+def main(test_list, file_id, sender, pk_dumped, mk_dumped):
     json_file_header = {
         "sender": None,
-        "case_id": None,
+        "file_id": None,
         "pk": None,
         "mk": None,
     }
@@ -29,7 +29,7 @@ def main(test_list, case_id, sender, pk_dumped, mk_dumped):
 
     with open(name_file + 'test', 'a', encoding='utf-8') as f:
         json_file_header['sender'] = str(sender)
-        json_file_header['case_id'] = str(case_id)
+        json_file_header['file_id'] = str(file_id)
         json_file_header['pk'] = pk_dumped
         json_file_header['mk'] = mk_dumped
         json.dump(json_file_header, f, ensure_ascii=False, indent=4)
@@ -56,4 +56,4 @@ def main(test_list, case_id, sender, pk_dumped, mk_dumped):
     print('ipfs hash')
     print(hash_file)
 
-    SC_send_link.send_link(case_id, hash_file)
+    SC_send_link.send_link(file_id, hash_file)

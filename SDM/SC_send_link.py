@@ -14,7 +14,7 @@ def get_nonce(ETH_address):
     return web3.eth.get_transaction_count(ETH_address)
 
 
-def send_link(account_address, attributes):
+def send_link(file_id, attributes):
     with open(compiled_contract_path) as file:
         contract_json = json.load(file)
         contract_abi = contract_json['abi']
@@ -28,7 +28,7 @@ def send_link(account_address, attributes):
     }
     message_bytes = attributes.encode('ascii')
     base64_bytes = base64.b64encode(message_bytes)
-    message = contract.functions.setIPFSInfo(account_address, base64_bytes[:32], base64_bytes[32:]).buildTransaction(tx)
+    message = contract.functions.updateHash(file_id, base64_bytes[:32], base64_bytes[32:]).buildTransaction(tx)
     signed_transaction = web3.eth.account.sign_transaction(message, private_key)
     transaction_hash = web3.eth.send_raw_transaction(signed_transaction.rawTransaction)
     print('tx_hash')
