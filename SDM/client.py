@@ -1,5 +1,7 @@
 import socket
 import ssl
+from hashlib import sha512
+import sqlite3
 
 HEADER = 64
 PORT = 5052
@@ -11,6 +13,10 @@ ADDR = (SERVER, PORT)
 server_cert = 'Keys/server.crt'
 client_cert = 'Keys/client.crt'
 client_key = 'Keys/client.key'
+
+# Connection to SQLite3 public_Keys
+connection = sqlite3.connect('Database_Reader/private_key.db')
+y = connection.cursor()
 
 """
 creation and connection of the secure channel using SSL protocol
@@ -35,21 +41,29 @@ def send(msg):
     conn.send(send_length)
     print(send_length)
     conn.send(message)
-    print(conn.recv(msg_length).decode(FORMAT))
+    receive = conn.recv(6000).decode(FORMAT)
+    print(receive)
 
 
 # policy = '((four or three) and (two or one))'
-text = 'Manufacturer_company: Beta\nAddress: 82, Beta street\nE-mail: manufacturer.beta@mail.com\n' \
-       'Frames_quantity: 8\nPropeller: 80\nPropeller_Guard: 63\nCamera: 30\nController_quantity: 4\n' \
-       'Amount_payed: 12000$'
-policy = '(1621 and 862341)'
+text = 'Manufacturer_company: Beta \n Address: 82 , Beta street \n Email: mnfctr . beta@mail . com//asdasdasd'
+policy = '(1621 and 862341)//asdasduoad'
 sender = '0x989ab0A74915727f4e9dd7057EE7db71bA3DFeaD'
 
-send("Please cipher this message||" + text + "||" + policy + "||" + sender)
-exit()
-input()
-send("Hello Everyone!")
-input()
-send("Hello Tim!")
+# send("Please certify signature||" + sender)
 
-send(DISCONNECT_MESSAGE)
+msg = b'9679842212974955389'
+hash = int.from_bytes(sha512(msg).digest(), byteorder='big')
+y.execute("SELECT * FROM privateKeys WHERE address = ?", (sender,))
+user_privateKey = y.fetchall()
+signature = pow(hash, int(user_privateKey[0][2]), int(user_privateKey[0][1]))
+# input()
+# input()
+send("Please cipher this message||" + text + "||" + policy + "||" + sender + "||" + str(signature))
+# exit()
+# input()
+# send("Hello Everyone!")
+# input()
+# send("Hello Tim!")
+
+# send(DISCONNECT_MESSAGE)

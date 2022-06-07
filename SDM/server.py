@@ -2,6 +2,10 @@ import socket
 import ssl
 import threading
 import abenc_adapt_hybrid
+from datetime import datetime
+import random
+import sqlite3
+from hashlib import sha512
 
 HEADER = 64
 PORT = 5052
@@ -51,11 +55,39 @@ def handle_client(conn, addr):
             if msg == DISCONNECT_MESSAGE:
                 connected = False
 
-            print(f"[{addr}] {msg}")
+            # print(f"[{addr}] {msg}")
             conn.send("Msg received!".encode(FORMAT))
             message = msg.split('||')
+            if message[0] == "Please certify signature":
+                now = datetime.now()
+                now = int(now.strftime("%Y%m%d%H%M%S%f"))
+                random.seed(now)
+                number_to_sign = random.randint(1, 2 ** 64)
+                connection = sqlite3.connect('Database_SDM/signatures.db')
+                x = connection.cursor()
+                x.execute("INSERT OR IGNORE INTO signatures VALUES (?,?)",
+                          (message[1], str(number_to_sign)))
+                connection.commit()
+                conn.send(b'Ecco qui il numero: ' + str(number_to_sign).encode())
             if message[0] == "Please cipher this message":
-                create(message)
+                connection = sqlite3.connect('Database_SDM/signatures.db')
+                x = connection.cursor()
+                x.execute("SELECT * FROM signatures WHERE address = ? ORDER BY number DESC LIMIT 1;", (message[3],))
+                user_signature = x.fetchall()
+                user_signature = user_signature[0][1]
+                connection1 = sqlite3.connect('Database_Reader/public_key.db')
+                y = connection1.cursor()
+                y.execute("SELECT * FROM publicKeys WHERE address = ?", (message[3],))
+                user_public_key = y.fetchall()
+                hash = int.from_bytes(sha512(str(user_signature).encode()).digest(), byteorder='big')
+                hashFromSignature = pow(int(message[4]), int(user_public_key[0][2]), int(user_public_key[0][1]))
+                if hash == hashFromSignature:
+                    print('ok')
+                    exit()
+                    create(message)
+                else:
+                    print('NCS')
+                    exit()
 
     conn.close()
 
