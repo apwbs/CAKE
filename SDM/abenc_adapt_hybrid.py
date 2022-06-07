@@ -65,7 +65,7 @@ def main(message, access_policy, sender):
         now = datetime.now()
         now = int(now.strftime("%Y%m%d%H%M%S%f"))
         random.seed(now)
-        case_id = random.randint(1, 2 ** 64)
+        file_id = random.randint(1, 2 ** 64)
         message_id = random.randint(1, 2 ** 64)
 
         ct = hyb_abe.encrypt(pk, message, access_policy)
@@ -91,7 +91,7 @@ def main(message, access_policy, sender):
 
         test_list = [(str(message_id), ct_dumped, hex_dig, salt_encrypted_dumped)]
 
-        write.main(test_list, case_id, sender, pk_dumped, mk_dumped)
+        write.main(test_list, file_id, sender, pk_dumped, mk_dumped)
     else:
         print('I am trying this one')
 
@@ -107,7 +107,7 @@ def main(message, access_policy, sender):
         for i in range(len(find_number_messages)+1):
             message_id_list.append(random.randint(1, 2 ** 64))
 
-        case_id = random.randint(1, 2 ** 64)
+        file_id = random.randint(1, 2 ** 64)
 
         message = message.decode('utf-8').split('//')
         access_policy = access_policy.split('//')
@@ -134,7 +134,7 @@ def main(message, access_policy, sender):
             ct_dumped = json.dumps(ct_encoded)
             test_list.append((element[2], ct_dumped, hex_dig, salt_encrypted_dumped))
 
-        write.main(test_list, case_id, sender, pk_dumped, mk_dumped)
+        write.main(test_list, file_id, sender, pk_dumped, mk_dumped)
 
 
 if __name__ == "__main__":
