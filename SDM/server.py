@@ -82,12 +82,7 @@ def handle_client(conn, addr):
                 hash = int.from_bytes(sha512(str(user_signature).encode()).digest(), byteorder='big')
                 hashFromSignature = pow(int(message[4]), int(user_public_key[0][2]), int(user_public_key[0][1]))
                 if hash == hashFromSignature:
-                    print('ok')
-                    exit()
                     create(message)
-                else:
-                    print('NCS')
-                    exit()
 
     conn.close()
 

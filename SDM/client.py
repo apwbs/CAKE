@@ -62,8 +62,5 @@ signature = pow(hash, int(user_privateKey[0][2]), int(user_privateKey[0][1]))
 send("Please cipher this message||" + text + "||" + policy + "||" + sender + "||" + str(signature))
 # exit()
 # input()
-# send("Hello Everyone!")
-# input()
-# send("Hello Tim!")
 
 # send(DISCONNECT_MESSAGE)
