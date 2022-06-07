@@ -8,14 +8,14 @@ compiled_contract_path = '../Blockchain/build/contracts/Guai.json'
 deployed_contract_address = '0x2D9EAe20E1E7515d47fBB9A5d454Ce7Be59cA03f'
 
 
-def retrieve_link(case_id):
+def retrieve_link(file_id):
     with open(compiled_contract_path) as file:
         contract_json = json.load(file)
         contract_abi = contract_json['abi']
 
     contract = web3.eth.contract(address=deployed_contract_address, abi=contract_abi)
 
-    message = contract.functions.getIPFSInfo(int(case_id)).call()
+    message = contract.functions.getHash(int(file_id)).call()
     message_bytes = base64.b64decode(message)
     message = message_bytes.decode('ascii')
     return message
