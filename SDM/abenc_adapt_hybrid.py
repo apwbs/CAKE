@@ -103,15 +103,15 @@ def main(message, access_policy, sender):
         random.seed(now)
 
         find_number_messages = [m.start() for m in re.finditer('//', message_decoded)]
-        message_id_list = []
+        slice_id_list = []
         for i in range(len(find_number_messages)+1):
-            message_id_list.append(random.randint(1, 2 ** 64))
+            slice_id_list.append(random.randint(1, 2 ** 64))
 
-        file_id = random.randint(1, 2 ** 64)
+        message_id = random.randint(1, 2 ** 64)
 
         message = message.decode('utf-8').split('//')
         access_policy = access_policy.split('//')
-        list_string = map(str, message_id_list)
+        list_string = map(str, slice_id_list)
         list_paired = list(zip(message, access_policy, list(list_string)))
 
         test_list = []
@@ -134,8 +134,8 @@ def main(message, access_policy, sender):
             ct_dumped = json.dumps(ct_encoded)
             test_list.append((element[2], ct_dumped, hex_dig, salt_encrypted_dumped))
 
-        write.main(test_list, file_id, sender, pk_dumped, mk_dumped)
-        return file_id
+        write.main(test_list, message_id, sender, pk_dumped, mk_dumped)
+        return message_id
 
 
 if __name__ == "__main__":
