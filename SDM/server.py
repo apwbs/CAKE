@@ -68,7 +68,7 @@ def handle_client(conn, addr):
                 x.execute("INSERT OR IGNORE INTO signatures VALUES (?,?)",
                           (message[1], str(number_to_sign)))
                 connection.commit()
-                conn.send(b'Ecco qui il numero: ' + str(number_to_sign).encode())
+                conn.send(b'Here is the number: ' + str(number_to_sign).encode())
             if message[0] == "Please cipher this message":
                 connection = sqlite3.connect('Database_SDM/signatures.db')
                 x = connection.cursor()
@@ -84,7 +84,7 @@ def handle_client(conn, addr):
                 if hash == hashFromSignature:
                     print('signature ok')
                     message_id = create(message)
-                    conn.send(b'Ecco qui il message_id: ' + str(message_id).encode())
+                    conn.send(b'Here is the message_id: ' + str(message_id).encode())
                 else:
                     print('signature not ok')
                     exit()

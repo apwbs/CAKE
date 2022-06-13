@@ -60,7 +60,6 @@ def main(message, access_policy, sender):
 
     message_decoded = message.decode('utf-8')
     if message_decoded.find('//') == -1:
-        print('Example with one policy and one receiver')
 
         now = datetime.now()
         now = int(now.strftime("%Y%m%d%H%M%S%f"))
@@ -93,7 +92,6 @@ def main(message, access_policy, sender):
 
         write.main(test_list, file_id, sender, pk_dumped, mk_dumped)
     else:
-        print('I am trying this one')
 
         connection1 = sqlite3.connect('../Pk_Mk/public_keys.db')
         k = connection1.cursor()
