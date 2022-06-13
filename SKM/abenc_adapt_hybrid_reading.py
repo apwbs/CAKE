@@ -72,7 +72,7 @@ def main(message):
     if len(find_separator) == 0:
         check = getfile[find_separator_header[0]+8:]
         test = json.loads(check)
-        check_requester = test['message_id']
+        check_requester = test['slice_id']
         if check_requester == message[2]:
             test1 = test['content']
             test1 = decoders_encoders.ciphertext_decoder(test1)
@@ -91,7 +91,7 @@ def main(message):
             else:
                 check = getfile[find_separator[i - 1] + 4:]
             test = json.loads(check)
-            check_requester = test['message_id']
+            check_requester = test['slice_id']
             if check_requester == message[2]:
                 test1 = test['content']
                 test1 = decoders_encoders.ciphertext_decoder(test1)
