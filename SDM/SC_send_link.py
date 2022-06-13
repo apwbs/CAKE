@@ -14,7 +14,7 @@ def get_nonce(ETH_address):
     return web3.eth.get_transaction_count(ETH_address)
 
 
-def send_link(message_id, attributes):
+def send_link(message_id, hash_file):
     with open(compiled_contract_path) as file:
         contract_json = json.load(file)
         contract_abi = contract_json['abi']
@@ -26,7 +26,7 @@ def send_link(message_id, attributes):
         'gasPrice': web3.eth.gas_price,
         'from': sdm_ethereum_address
     }
-    message_bytes = attributes.encode('ascii')
+    message_bytes = hash_file.encode('ascii')
     base64_bytes = base64.b64encode(message_bytes)
     message = contract.functions.updateHash(message_id, base64_bytes[:32], base64_bytes[32:]).buildTransaction(tx)
     signed_transaction = web3.eth.account.sign_transaction(message, private_key)
