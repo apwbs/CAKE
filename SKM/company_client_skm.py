@@ -47,7 +47,7 @@ def blockchain_interaction(item):
     web3.eth.defaultAccount = config('DEFAULT_ACCOUNT')
     private_key = config('PRIVATE_KEY')
 
-    compiled_contract_path = '../Blockchain/build/contracts/Guai.json'
+    compiled_contract_path = '../Blockchain/build/contracts/CakeContract.json'
     deployed_contract_address = config('CONTRACT_ADDRESS')
 
     with open(compiled_contract_path) as file:
@@ -81,7 +81,7 @@ def blockchain_interaction(item):
 
 
 def get_blockchain_data(param):
-    compiled_contract_path = '../Blockchain/build/contracts/Guai.json'
+    compiled_contract_path = '../Blockchain/build/contracts/CakeContract.json'
     deployed_contract_address = config('CONTRACT_ADDRESS')
 
     with open(compiled_contract_path) as file:

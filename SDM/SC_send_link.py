@@ -6,7 +6,7 @@ import base64
 web3 = Web3(Web3.HTTPProvider("https://ropsten.infura.io/v3/ce66ac4ce92a4e92a7fde9d33efced63"))
 sdm_ethereum_address = config('ETHEREUM_ADDRESS')
 private_key = config('PRIVATE_KEY')
-compiled_contract_path = '../Blockchain/build/contracts/Guai.json'
+compiled_contract_path = '../Blockchain/build/contracts/CakeContract.json'
 deployed_contract_address = config('CONTRACT_ADDRESS')
 
 

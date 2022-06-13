@@ -4,7 +4,7 @@ import base64
 
 web3 = Web3(Web3.HTTPProvider("https://ropsten.infura.io/v3/ce66ac4ce92a4e92a7fde9d33efced63"))
 
-compiled_contract_path = '../Blockchain/build/contracts/Guai.json'
+compiled_contract_path = '../Blockchain/build/contracts/CakeContract.json'
 deployed_contract_address = '0x2D9EAe20E1E7515d47fBB9A5d454Ce7Be59cA03f'
 
 
