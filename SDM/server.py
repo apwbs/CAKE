@@ -8,7 +8,7 @@ import sqlite3
 from hashlib import sha512
 
 HEADER = 64
-PORT = 5052
+PORT = 5055
 server_cert = 'Keys/server.crt'
 server_key = 'Keys/server.key'
 client_certs = 'Keys/client.crt'
@@ -34,7 +34,7 @@ function triggered by the client handler. Here starts the ciphering of the messa
 
 
 def create(message):
-    abenc_adapt_hybrid.main(message[1], message[2], message[3])
+    return abenc_adapt_hybrid.main(message[1], message[2], message[3])
 
 
 """
@@ -72,7 +72,7 @@ def handle_client(conn, addr):
             if message[0] == "Please cipher this message":
                 connection = sqlite3.connect('Database_SDM/signatures.db')
                 x = connection.cursor()
-                x.execute("SELECT * FROM signatures WHERE address = ? ORDER BY number DESC LIMIT 1;", (message[3],))
+                x.execute("SELECT * FROM signatures WHERE address = ?", (message[3],))
                 user_signature = x.fetchall()
                 user_signature = user_signature[0][1]
                 connection1 = sqlite3.connect('Database_Reader/public_key.db')
@@ -82,7 +82,12 @@ def handle_client(conn, addr):
                 hash = int.from_bytes(sha512(str(user_signature).encode()).digest(), byteorder='big')
                 hashFromSignature = pow(int(message[4]), int(user_public_key[0][2]), int(user_public_key[0][1]))
                 if hash == hashFromSignature:
-                    create(message)
+                    print('signature ok')
+                    message_id = create(message)
+                    conn.send(b'Ecco qui il message_id: ' + str(message_id).encode())
+                else:
+                    print('signature not ok')
+                    exit()
 
     conn.close()
 

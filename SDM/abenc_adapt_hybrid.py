@@ -135,6 +135,7 @@ def main(message, access_policy, sender):
             test_list.append((element[2], ct_dumped, hex_dig, salt_encrypted_dumped))
 
         write.main(test_list, file_id, sender, pk_dumped, mk_dumped)
+        return file_id
 
 
 if __name__ == "__main__":
