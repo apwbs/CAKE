@@ -3,7 +3,7 @@
 This repository is the implementation of the Cake approach presented in paper "Fine-grained Data Access Control for
 Collaborative Process Execution on Blockchain". 
 
-## Requirements
+## Guide to run the whole architecture
 In order to run the system, the following libraries must be installed: python3, charm, rsa, web3, python-decouple, pycryptodome.
  
 The first thing to do is to generate the private/public keys: 
