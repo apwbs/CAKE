@@ -32,3 +32,15 @@ To send a message to the SDM component the following steps must be followed:
 3. in 'client.py' send the 'Please certify signature' message (line 53) commenting all the others lines exept line 67 with python3 client.py.
 5. comment line 53 and modify the 'msg' variable with the received number. Uncomment lines 57,58,59,60. 
 6. modify the 'text' variable with the plaintext and the 'policy' variable with the policy to cipher the plaintext. Uncomment line 63. Run python3 client.py
+
+To read a message from the SKM component the first thing to do is to ask for a key:
+1. move in the SKM folder
+2. uncomment lines 41,42 and modify the message_id variable 
+with the message_id received from the Data Owner. 
+3. send the 'Please generate my key' message with python3 client.py
+
+After receiving and stored the key, to read a message the steps are the following:
+1. comment line 41,42 and uncomment lines 49,50,51
+2. modify the variable slice_id with the 
+slice_id that the reader wants to access
+3. send the 'Please read my data' message with python3 client.py
