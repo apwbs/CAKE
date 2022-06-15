@@ -39,7 +39,7 @@ To read a message from the SKM component the first thing to do is to ask for a k
 with the message_id received from the Data Owner. 
 3. send the 'Please generate my key' message with python3 client.py
 
-After receiving and stored the key, to read a message the steps are the following:
+After receiving and saving the key, to read a message the steps are the following:
 1. comment line 41,42 and uncomment lines 49,50,51
 2. modify the variable slice_id with the 
 slice_id that the reader wants to access
