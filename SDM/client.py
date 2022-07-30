@@ -4,11 +4,11 @@ from hashlib import sha512
 import sqlite3
 
 HEADER = 64
-PORT = 5052
+PORT = 5055
 FORMAT = 'utf-8'
 server_sni_hostname = 'example.com'
 DISCONNECT_MESSAGE = "!DISCONNECT"
-SERVER = "172.17.0.2"
+SERVER = "172.17.0.3"
 ADDR = (SERVER, PORT)
 server_cert = 'Keys/server.crt'
 client_cert = 'Keys/client.crt'
@@ -51,8 +51,9 @@ policy = '(1621 and 862341)//asdasduoad'
 sender = '0x989ab0A74915727f4e9dd7057EE7db71bA3DFeaD'
 
 # send("Please certify signature||" + sender)
+# input()
 
-msg = b'9679842212974955389'
+msg = b'16346190506733741455'
 hash = int.from_bytes(sha512(msg).digest(), byteorder='big')
 y.execute("SELECT * FROM privateKeys WHERE address = ?", (sender,))
 user_privateKey = y.fetchall()
@@ -63,4 +64,4 @@ send("Please cipher this message||" + text + "||" + policy + "||" + sender + "||
 # exit()
 # input()
 
-# send(DISCONNECT_MESSAGE)
+send(DISCONNECT_MESSAGE)

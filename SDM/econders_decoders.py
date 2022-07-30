@@ -115,7 +115,10 @@ def ciphertext_encoder(ct):
         s = "".join(chr(i) for i in s)
         c1['Cyp'][u] = s
 
-    c1['policy'] = ct['c1']['policy']
+    b = ct['c1']['policy']
+    b = rsa.encrypt(bytes(b, 'utf-8'), publicKey_usable)
+    b = "".join(chr(i) for i in b)
+    c1['policy'] = b
     c1['attributes'] = ct['c1']['attributes']
 
     Dict['c2'] = c2

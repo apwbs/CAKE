@@ -137,7 +137,12 @@ def ciphertext_decoder(ct_dumped):
         s = groupObj.deserialize(s)
         c1['Cyp'][u] = s
 
-    c1['policy'] = ct_dumped['c1']['policy']
+    b = ct_dumped['c1']['policy']
+    b = bytes(b, 'unicode_escape')
+    b = b.decode('unicode_escape').encode("raw_unicode_escape")
+    b = rsa.decrypt(b, privateKey_usable)
+    b = b.decode('utf-8')
+    c1['policy'] = b
     c1['attributes'] = ct_dumped['c1']['attributes']
 
     Dict1['c2'] = c2

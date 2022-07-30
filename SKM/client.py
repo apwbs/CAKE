@@ -9,7 +9,7 @@ PORT = 5050
 FORMAT = 'utf-8'
 server_sni_hostname = 'example.com'
 DISCONNECT_MESSAGE = "!DISCONNECT"
-SERVER = "172.17.0.2"
+SERVER = "172.17.0.3"
 ADDR = (SERVER, PORT)
 server_cert = 'Keys/server.crt'
 client_cert = 'Keys/client.crt'
@@ -47,8 +47,8 @@ def send(msg):
     #     text_file.write(json.dumps(receive[75:]))
 
 
-message_id = '557075206923760024'
-slice_id = '12636303280127960970'
+message_id = '10163413069310470956'
+slice_id = '8057614612533497852'
 requester = '0xA5dfE42d5BE39A3aE6c45ED7aBbCD77F8647D54B'
 
 with open("key_" + requester + "--messageid_" + message_id + ".txt") as f:
