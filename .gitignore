@@ -6,3 +6,4 @@
 secret_mnemonic
 /SKM/Database_SKM/private_key.db
 /SDM/Database_SDM/private_key.db
+charm/*
