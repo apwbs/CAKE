@@ -5,7 +5,7 @@ Collaborative Process Execution on Blockchain".
 
 ## Guide to run the whole architecture
 In order to run the system, the following libraries must be installed: 
-python3, charm https://github.com/JHUISI/charm, rsa, web3, python-decouple, pycryptodome.
+python3, charm https://github.com/JHUISI/charm, rsa, web3 (python version), python-decouple, pycryptodome.
  
 The first thing to do is to generate the private/public keys: 
 Open a terminal and
