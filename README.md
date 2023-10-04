@@ -21,7 +21,7 @@ function with python3 handshake_readers.py.
 After the creation of all the necessary keys, one must give the attributes to the parties involved in the process: first action of Figure 2 of the paper.
 If one wants to use integers as attributes skip the following step. 
 1. move in the SKM folder and modify the 'dict_attributes' 
-dictionary and run the function 'store_default_attributes()' with python3 company_client_skm.py to store it in a local database. 
+dictionary and run the function `store_default_attributes()` with python3 company_client_skm.py to store it in a local database. 
 
 2. add the Ethereum addresses and the chosen attributes (string or integers) in the 'dict_users' 
 dictionary and run the function 'give_attributes()' 
