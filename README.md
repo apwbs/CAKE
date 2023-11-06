@@ -7,12 +7,12 @@ Collaborative Process Execution on Blockchain](https://arxiv.org/abs/2207.08484)
 In order to run the system, the following libraries must be installed: 
 python3, charm https://github.com/JHUISI/charm, rsa, web3 (python version), python-decouple, pycryptodome.
  
-The first thing to do is to generate the private/public keys: 
-Open a terminal and
-1. move in the SDM folder and run the 'generate_keys()' 
+The first thing to do is to generate the private/public keys. 
+To this end, do the following within a terminal.
+1. Move to the SDM folder and run the ```generate_keys()``` function
 with python3 rsa_sdm.py.
-2. move in the SKM folder and run the 'generate_keys()' 
-function with python3 rsa_skm.py.
+2. Move to the SKM folder and run the ```generate_keys()``` function
+with python3 rsa_skm.py.
 
 Then the private/public keys of each client must be generated. To do this:
 1. move in the SDM folder and run the 'generate_keys()' 
